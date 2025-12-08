@@ -7463,7 +7463,11 @@ static void ShowStressTestDemo()
 // ============================================================
 // MAIN DEMO WINDOW
 // ============================================================
-void ImAnimDemoWindow()
+void ImAnimDemoImpl(bool showInWindow);
+void ImAnimDemoWindow() { ImAnimDemoImpl(true); }
+void ImAnimDemoContent() { ImAnimDemoImpl(false); }
+
+void ImAnimDemoImpl(bool showInWindow)
 {
 	// Start profiler frame
 	iam_profiler_begin_frame();
@@ -7477,11 +7481,13 @@ void ImAnimDemoWindow()
 	iam_clip_update(GetSafeDeltaTime());
 	iam_profiler_end();
 
-	ImGui::SetNextWindowSize(ImVec2(650, 750), ImGuiCond_FirstUseEver);
-	if (!ImGui::Begin("Anim Demo")) {
-		ImGui::End();
-		iam_profiler_end_frame();
-		return;
+	if (showInWindow) {
+		ImGui::SetNextWindowSize(ImVec2(650, 750), ImGuiCond_FirstUseEver);
+		if (!ImGui::Begin("Anim Demo")) {
+			ImGui::End();
+			iam_profiler_end_frame();
+			return;
+		}
 	}
 
 	ImGui::Text("Anim %s", "1.0");
@@ -7766,7 +7772,9 @@ void ImAnimDemoWindow()
 
 	ImGui::EndChild();  // End scrollable content
 
-	ImGui::End();
+	if (showInWindow) {
+		ImGui::End();
+	}
 
 	// Show unified inspector if enabled
 	if (show_debug_window) {
