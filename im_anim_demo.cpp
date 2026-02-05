@@ -7566,11 +7566,10 @@ void ImAnimDemoWindow(bool create_window)
 	// HERO ANIMATION (Showcase)
 	// ========================================
 	iam_profiler_begin("Hero Animation");
-	ShowHeroAnimation();
+	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+	if (ImGui::CollapsingHeader("Hero Animation"))
+		ShowHeroAnimation();
 	iam_profiler_end();
-
-	ImGui::Separator();
-	ImGui::Spacing();
 
 	// ========================================
 	// 1. EASING & TWEENS
