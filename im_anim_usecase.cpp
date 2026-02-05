@@ -14,6 +14,13 @@
 #include <math.h>
 #include <stdio.h>
 
+#ifdef IMGUI_HAS_DEMO_MARKER_CALLBACK
+#define IMGUI_DEMO_MARKER(section)  do { if (GImGuiDemoMarkerCallback) GImGuiDemoMarkerCallback("im_anim_usecase", __LINE__, section, GImGuiDemoMarkerCallbackUserData); } while (0)
+#else
+#define IMGUI_DEMO_MARKER(section)
+#endif
+
+
 // ============================================================
 // HELPER: Get delta time with safety bounds
 // ============================================================
@@ -30,6 +37,7 @@ static float GetUsecaseDeltaTime()
 // ============================================================
 static void ShowUsecase_AnimatedButton()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_AnimatedButton");
 	ImGui::TextWrapped(
 		"Buttons that respond with smooth animations on hover, press, and release. "
 		"Demonstrates crossfade policy for seamless state transitions.");
@@ -180,6 +188,7 @@ static void ShowUsecase_AnimatedButton()
 // ============================================================
 static void ShowUsecase_ToastNotifications()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_ToastNotifications");
 	ImGui::TextWrapped(
 		"Toast notifications that slide in, hold, then fade out. "
 		"Uses clip-based animation with stagger for multiple toasts.");
@@ -285,6 +294,7 @@ static void ShowUsecase_ToastNotifications()
 // ============================================================
 static void ShowUsecase_SidebarNavigation()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_SidebarNavigation");
 	ImGui::TextWrapped(
 		"Collapsible sidebar with smooth slide animation. "
 		"Menu items stagger their entrance for a polished feel.");
@@ -363,6 +373,7 @@ static void ShowUsecase_SidebarNavigation()
 // ============================================================
 static void ShowUsecase_LoadingSpinners()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_LoadingSpinners");
 	ImGui::TextWrapped(
 		"Various loading spinner styles using oscillators and tweens. "
 		"Demonstrates continuous animations with different waveforms.");
@@ -492,6 +503,7 @@ static void ShowUsecase_LoadingSpinners()
 // ============================================================
 static void ShowUsecase_CardHover()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_CardHover");
 	ImGui::TextWrapped(
 		"Card components with lift, shadow, and content reveal on hover. "
 		"Shows coordinated multi-property animations.");
@@ -580,6 +592,7 @@ static void ShowUsecase_CardHover()
 // ============================================================
 static void ShowUsecase_TabTransitions()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_TabTransitions");
 	ImGui::TextWrapped(
 		"Tab switching with smooth underline animation and content crossfade. "
 		"The indicator follows the active tab with spring physics.");
@@ -683,6 +696,7 @@ static void ShowUsecase_TabTransitions()
 // ============================================================
 static void ShowUsecase_ProgressBar()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_ProgressBar");
 	ImGui::TextWrapped(
 		"Animated progress bar with segmented fill and glow effects. "
 		"Uses color interpolation in OKLAB for smooth gradients.");
@@ -765,6 +779,7 @@ static void ShowUsecase_ProgressBar()
 // ============================================================
 static void ShowUsecase_ModalDialog()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_ModalDialog");
 	ImGui::TextWrapped(
 		"Modal dialog with backdrop fade and content scale-in animation. "
 		"Demonstrates layered animations with different timing.");
@@ -896,6 +911,7 @@ static void ShowUsecase_ModalDialog()
 // ============================================================
 static void ShowUsecase_Accordion()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_Accordion");
 	ImGui::TextWrapped(
 		"Accordion sections that expand and collapse with smooth height animation. "
 		"Arrow icons rotate to indicate state.");
@@ -1002,6 +1018,7 @@ static void ShowUsecase_Accordion()
 // ============================================================
 static void ShowUsecase_FABMenu()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_FABMenu");
 	ImGui::TextWrapped(
 		"Floating action button that expands into a radial arc menu. "
 		"Uses staggered animations for child buttons.");
@@ -1162,6 +1179,7 @@ static void ShowUsecase_FABMenu()
 // ============================================================
 static void ShowUsecase_AnimatedCounter()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_AnimatedCounter");
 	ImGui::TextWrapped(
 		"Statistics that count up when they come into view. "
 		"Common in landing pages and dashboards.");
@@ -1251,6 +1269,7 @@ static void ShowUsecase_AnimatedCounter()
 // ============================================================
 static void ShowUsecase_TypewriterText()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_TypewriterText");
 	ImGui::TextWrapped(
 		"Text that types out character by character with a blinking cursor. "
 		"Classic effect for hero sections and intros.");
@@ -1340,6 +1359,7 @@ static void ShowUsecase_TypewriterText()
 // ============================================================
 static void ShowUsecase_SkeletonLoading()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_SkeletonLoading");
 	ImGui::TextWrapped(
 		"Skeleton loading placeholders with shimmer effect. "
 		"Shows perceived performance while content loads.");
@@ -1482,6 +1502,7 @@ static void ShowUsecase_SkeletonLoading()
 // ============================================================
 static void ShowUsecase_AvatarStack()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_AvatarStack");
 	ImGui::TextWrapped(
 		"Stacked avatars that expand on hover to reveal all members. "
 		"Common pattern for showing team members or participants.");
@@ -1594,6 +1615,7 @@ static void ShowUsecase_AvatarStack()
 // ============================================================
 static void ShowUsecase_RippleEffect()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_RippleEffect");
 	ImGui::TextWrapped(
 		"Material Design-style ripple effect on click. "
 		"Provides tactile feedback for interactive elements.");
@@ -1686,6 +1708,7 @@ static void ShowUsecase_RippleEffect()
 // ============================================================
 static void ShowUsecase_HamburgerMorph()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_HamburgerMorph");
 	ImGui::TextWrapped(
 		"Hamburger icon that morphs into an X when clicked. "
 		"Classic navigation pattern with smooth line animations.");
@@ -1780,6 +1803,7 @@ static void ShowUsecase_HamburgerMorph()
 // ============================================================
 static void ShowUsecase_SwipeCards()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_SwipeCards");
 	ImGui::TextWrapped(
 		"Stacked cards that can be swiped left or right. "
 		"Popular in dating apps and decision-making interfaces.");
@@ -1951,6 +1975,7 @@ static void ShowUsecase_SwipeCards()
 // ============================================================
 static void ShowUsecase_GradientAnimation()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_GradientAnimation");
 	ImGui::TextWrapped(
 		"Animated gradient backgrounds that shift colors smoothly. "
 		"Creates atmosphere and visual interest in hero sections.");
@@ -2030,6 +2055,7 @@ static void ShowUsecase_GradientAnimation()
 // ============================================================
 static void ShowUsecase_TooltipAnimation()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_TooltipAnimation");
 	ImGui::TextWrapped(
 		"Smooth tooltip animations that slide in with a slight bounce. "
 		"Enhances UX by providing context without jarring popups.");
@@ -2160,6 +2186,7 @@ static void ShowUsecase_TooltipAnimation()
 // ============================================================
 static void ShowUsecase_PulseBadge()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_PulseBadge");
 	ImGui::TextWrapped(
 		"Notification badges that pulse to draw attention. "
 		"Common for unread messages, alerts, and status indicators.");
@@ -2269,6 +2296,7 @@ static void ShowUsecase_PulseBadge()
 // ============================================================
 static void ShowUsecase_FlipCard()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_FlipCard");
 	ImGui::TextWrapped(
 		"Card that flips to reveal content on the back. "
 		"Uses perspective simulation for a 3D-like effect.");
@@ -2363,6 +2391,7 @@ static void ShowUsecase_FlipCard()
 // ============================================================
 static void ShowUsecase_Carousel()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_Carousel");
 	ImGui::TextWrapped(
 		"Image carousel with smooth slide transitions. "
 		"Includes navigation dots and auto-advance option.");
@@ -2503,6 +2532,7 @@ static void ShowUsecase_Carousel()
 // ============================================================
 static void ShowUsecase_Stepper()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_Stepper");
 	ImGui::TextWrapped(
 		"Multi-step progress indicator with animated transitions. "
 		"Common in checkout flows and onboarding wizards.");
@@ -2637,6 +2667,7 @@ static void ShowUsecase_Stepper()
 // ============================================================
 static void ShowUsecase_SearchExpand()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_SearchExpand");
 	ImGui::TextWrapped(
 		"Search icon that expands into a full search bar on click. "
 		"Space-efficient pattern for headers and toolbars.");
@@ -2740,6 +2771,7 @@ static void ShowUsecase_SearchExpand()
 // ============================================================
 static void ShowUsecase_ToggleSwitch()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_ToggleSwitch");
 	ImGui::TextWrapped(
 		"iOS-style toggle switches with smooth thumb animation. "
 		"Includes color transition and bounce effect.");
@@ -2814,6 +2846,7 @@ static void ShowUsecase_ToggleSwitch()
 // ============================================================
 static void ShowUsecase_CircularProgress()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_CircularProgress");
 	ImGui::TextWrapped(
 		"Circular progress indicators with smooth fill animation. "
 		"Perfect for download progress, skill levels, or completion rates.");
@@ -2907,6 +2940,7 @@ static void ShowUsecase_CircularProgress()
 // ============================================================
 static void ShowUsecase_RatingStars()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_RatingStars");
 	ImGui::TextWrapped(
 		"Interactive star rating with hover preview and click animation. "
 		"Common pattern for reviews and feedback.");
@@ -3020,6 +3054,7 @@ static void ShowUsecase_RatingStars()
 // ============================================================
 static void ShowUsecase_AnimatedCheckbox()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_AnimatedCheckbox");
 	ImGui::TextWrapped("Animated checkboxes with smooth checkmark drawing and scale effect:");
 
 	static bool checkboxes[3] = { false, true, false };
@@ -3114,6 +3149,7 @@ static void ShowUsecase_AnimatedCheckbox()
 // ============================================================
 static void ShowUsecase_SlideDrawer()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_SlideDrawer");
 	ImGui::TextWrapped("Click the hamburger menu to toggle the side drawer:");
 
 	static bool drawer_open = false;
@@ -3219,6 +3255,7 @@ static void ShowUsecase_SlideDrawer()
 // ============================================================
 static void ShowUsecase_AnimatedRadio()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_AnimatedRadio");
 	ImGui::TextWrapped("Radio button group with smooth selection transitions:");
 
 	static int selected = 0;
@@ -3288,6 +3325,7 @@ static void ShowUsecase_AnimatedRadio()
 // ============================================================
 static void ShowUsecase_ShakeAnimation()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_ShakeAnimation");
 	ImGui::TextWrapped("Click 'Submit' with empty input to see shake animation:");
 
 	static char input_text[64] = "";
@@ -3392,6 +3430,7 @@ static void ShowUsecase_ShakeAnimation()
 // ============================================================
 static void ShowUsecase_AnimatedTags()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_AnimatedTags");
 	ImGui::TextWrapped("Add and remove skill tags with smooth animations:");
 
 	// Game Graphics Engineer skill tags
@@ -3530,6 +3569,7 @@ static void ShowUsecase_AnimatedTags()
 // ============================================================
 static void ShowUsecase_PendingButton()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_PendingButton");
 	ImGui::TextWrapped("Click the button to trigger a loading state with spinner:");
 
 	static bool is_pending[3] = { false, false, false };
@@ -3625,6 +3665,7 @@ static void ShowUsecase_PendingButton()
 // ============================================================
 static void ShowUsecase_AnimatedSlider()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_AnimatedSlider");
 	ImGui::TextWrapped("Custom slider with animated thumb and glowing track:");
 
 	static float slider_values[2] = { 0.3f, 0.7f };
@@ -3720,6 +3761,7 @@ static void ShowUsecase_AnimatedSlider()
 // ============================================================
 static void ShowUsecase_ColorSwatches()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_ColorSwatches");
 	ImGui::TextWrapped("Click to select a color with smooth animation:");
 
 	static int selected_color = 2;
@@ -3814,6 +3856,7 @@ static void ShowUsecase_ColorSwatches()
 // ============================================================
 static void ShowUsecase_TimelineScrubber()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_TimelineScrubber");
 	ImGui::TextWrapped("Animation timeline with draggable playhead and keyframes:");
 
 	static float playhead_pos = 0.3f;
@@ -3937,6 +3980,7 @@ static void ShowUsecase_TimelineScrubber()
 // ============================================================
 static void ShowUsecase_KeyframeCurve()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_KeyframeCurve");
 	ImGui::TextWrapped("Animation curve editor with draggable keyframe points:");
 
 	static ImVec2 keyframe_values[4] = {
@@ -4064,6 +4108,7 @@ static void ShowUsecase_KeyframeCurve()
 // ============================================================
 static void ShowUsecase_LayerStack()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_LayerStack");
 	ImGui::TextWrapped("Layer panel with animated visibility toggles:");
 
 	static bool layer_visible[4] = { true, true, false, true };
@@ -4162,6 +4207,7 @@ static void ShowUsecase_LayerStack()
 // ============================================================
 static void ShowUsecase_NodeConnector()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_NodeConnector");
 	ImGui::TextWrapped("Node connection with animated flow indicator:");
 
 	static float flow_offset = 0.0f;
@@ -4243,6 +4289,7 @@ static void ShowUsecase_NodeConnector()
 // ============================================================
 static void ShowUsecase_AnimatedBarChart()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_AnimatedBarChart");
 	ImGui::TextWrapped("Bar chart with animated data transitions:");
 
 	static float bar_values[6] = { 0.6f, 0.8f, 0.45f, 0.9f, 0.55f, 0.75f };
@@ -4326,6 +4373,7 @@ static void ShowUsecase_AnimatedBarChart()
 // ============================================================
 static void ShowUsecase_AnimatedLineChart()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_AnimatedLineChart");
 	ImGui::TextWrapped("Line chart with animated real-time data:");
 
 	static float data_points[20];
@@ -4410,6 +4458,7 @@ static void ShowUsecase_AnimatedLineChart()
 // ============================================================
 static void ShowUsecase_AnimatedPieChart()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_AnimatedPieChart");
 	ImGui::TextWrapped("Donut chart with animated segment transitions:");
 
 	static float segment_values[5] = { 0.3f, 0.25f, 0.2f, 0.15f, 0.1f };
@@ -4550,6 +4599,7 @@ static void ShowUsecase_AnimatedPieChart()
 // ============================================================
 static void ShowUsecase_HeatMap()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_HeatMap");
 	ImGui::TextWrapped("Heat map grid with animated color transitions:");
 
 	static float cell_values[8][6];
@@ -4667,6 +4717,7 @@ static void ShowUsecase_HeatMap()
 // ============================================================
 static void ShowUsecase_Sparkline()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_Sparkline");
 	ImGui::TextWrapped("Compact sparkline charts for inline data visualization:");
 
 	static float sparkline_data[3][12];
@@ -4767,6 +4818,7 @@ static void ShowUsecase_Sparkline()
 // ============================================================
 static void ShowUsecase_RadarChart()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_RadarChart");
 	ImGui::TextWrapped("Radar chart with animated data comparison:");
 
 	static float data_a[6] = { 0.8f, 0.6f, 0.9f, 0.5f, 0.7f, 0.85f };
@@ -4894,6 +4946,7 @@ static void ShowUsecase_RadarChart()
 // ============================================================
 static void ShowUsecase_GaugeMeter()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_GaugeMeter");
 	ImGui::TextWrapped("Gauge meter with animated needle and gradient arc:");
 
 	static float gauge_value = 0.65f;
@@ -5017,6 +5070,7 @@ static void ShowUsecase_GaugeMeter()
 // ============================================================
 static void ShowUsecase_SankeyFlow()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_SankeyFlow");
 	ImGui::TextWrapped("Animated flow diagram with particle effects:");
 
 	static float flow_time = 0.0f;
@@ -5222,6 +5276,7 @@ static void ShowUsecase_SankeyFlow()
 // ============================================================
 static void ShowUsecase_FunnelChart()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_FunnelChart");
 	ImGui::TextWrapped("Funnel chart with animated stage transitions:");
 
 	static float stage_values[5] = { 1.0f, 0.75f, 0.5f, 0.35f, 0.2f };
@@ -5298,6 +5353,7 @@ static void ShowUsecase_FunnelChart()
 // ============================================================
 static void ShowUsecase_ScatterPlot()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_ScatterPlot");
 	ImGui::TextWrapped("Scatter plot with animated data clustering:");
 
 	static float points_x[30], points_y[30];
@@ -5409,6 +5465,7 @@ static void ShowUsecase_ScatterPlot()
 // ============================================================
 static void ShowUsecase_ProgressDashboard()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_ProgressDashboard");
 	ImGui::TextWrapped("Dashboard with animated progress indicators:");
 
 	static float metrics[4] = { 0.72f, 0.45f, 0.88f, 0.33f };
@@ -5502,6 +5559,7 @@ static void ShowUsecase_ProgressDashboard()
 // ============================================================
 static void ShowUsecase_AreaChart()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_AreaChart");
 	ImGui::TextWrapped("Stacked area chart with smooth transitions:");
 
 	static float series_a[10] = { 0.2f, 0.3f, 0.25f, 0.4f, 0.35f, 0.5f, 0.45f, 0.55f, 0.5f, 0.6f };
@@ -5627,6 +5685,7 @@ static void ShowUsecase_AreaChart()
 // ============================================================
 static void ShowUsecase_PopoverMenu()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_PopoverMenu");
 	ImGui::TextWrapped(
 		"Animated popover menu that expands from a button click. "
 		"Items fade in with staggered timing.");
@@ -5715,6 +5774,7 @@ static void ShowUsecase_PopoverMenu()
 // ============================================================
 static void ShowUsecase_AlertBanner()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_AlertBanner");
 	ImGui::TextWrapped(
 		"Animated alert banners that slide in from top with different severity levels. "
 		"Auto-dismiss with progress indicator.");
@@ -5809,6 +5869,7 @@ static void ShowUsecase_AlertBanner()
 // ============================================================
 static void ShowUsecase_ExpandableListItem()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_ExpandableListItem");
 	ImGui::TextWrapped(
 		"List items that expand to reveal additional content with dynamic heights. "
 		"Each item has different content lengths to demonstrate adaptive sizing.");
@@ -5960,6 +6021,7 @@ static void ShowUsecase_ExpandableListItem()
 // ============================================================
 static void ShowUsecase_ImageGalleryGrid()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_ImageGalleryGrid");
 	ImGui::TextWrapped(
 		"Image gallery with hover zoom effect and selection animation. "
 		"Grid items scale up smoothly on hover.");
@@ -6054,6 +6116,7 @@ static void ShowUsecase_ImageGalleryGrid()
 // ============================================================
 static void ShowUsecase_ParticleBurst()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_ParticleBurst");
 	ImGui::TextWrapped(
 		"Particle burst effect triggered on click. "
 		"Great for celebrations, achievements, or feedback.");
@@ -6147,6 +6210,7 @@ static void ShowUsecase_ParticleBurst()
 // ============================================================
 static void ShowUsecase_GlowingBorder()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_GlowingBorder");
 	ImGui::TextWrapped(
 		"Animated glowing border effect for highlighting elements. "
 		"Pulses with customizable color.");
@@ -6200,6 +6264,7 @@ static void ShowUsecase_GlowingBorder()
 // ============================================================
 static void ShowUsecase_AnimatedGraphNode()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_AnimatedGraphNode");
 	ImGui::TextWrapped(
 		"Graph nodes with animated connections and hover states. "
 		"Common in node-based editors and flowcharts.");
@@ -6317,6 +6382,7 @@ static void ShowUsecase_AnimatedGraphNode()
 // ============================================================
 static void ShowUsecase_PlaybackControls()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_PlaybackControls");
 	ImGui::TextWrapped(
 		"Media playback controls with animated state transitions. "
 		"Play/pause morph and progress scrubbing.");
@@ -6444,6 +6510,7 @@ static void ShowUsecase_PlaybackControls()
 // ============================================================
 static void ShowUsecase_IconButtonRotation()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_IconButtonRotation");
 	ImGui::TextWrapped("Icon button that rotates its icon shape on hover using iam_tween_float.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -6544,6 +6611,7 @@ static void ShowUsecase_IconButtonRotation()
 // ============================================================
 static void ShowUsecase_ButtonGlow()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_ButtonGlow");
 	ImGui::TextWrapped("Button with animated glow effect on focus/hover using iam_oscillate.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -6601,6 +6669,7 @@ static void ShowUsecase_ButtonGlow()
 // ============================================================
 static void ShowUsecase_LikeHeartButton()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_LikeHeartButton");
 	ImGui::TextWrapped("Instagram-style heart button with hover grow, click bounce, and particle burst animations.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -6694,6 +6763,7 @@ static void ShowUsecase_LikeHeartButton()
 // ============================================================
 static void ShowUsecase_DownloadProgressButton()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_DownloadProgressButton");
 	ImGui::TextWrapped("Button that transforms into a progress indicator during download.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -6765,6 +6835,7 @@ static void ShowUsecase_DownloadProgressButton()
 // ============================================================
 static void ShowUsecase_SubmitButtonStates()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_SubmitButtonStates");
 	ImGui::TextWrapped("Form submit button with idle/loading/success/error state transitions.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -6842,6 +6913,7 @@ static void ShowUsecase_SubmitButtonStates()
 // ============================================================
 static void ShowUsecase_PillNavigation()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_PillNavigation");
 	ImGui::TextWrapped("Tab navigation with sliding pill indicator using iam_tween_float. Pills sized to fit text.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -6910,6 +6982,7 @@ static void ShowUsecase_PillNavigation()
 // ============================================================
 static void ShowUsecase_DropdownMenu()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_DropdownMenu");
 	ImGui::TextWrapped("Animated dropdown menu with staggered item reveal.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -6981,6 +7054,7 @@ static void ShowUsecase_DropdownMenu()
 // ============================================================
 static void ShowUsecase_ContextMenu()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_ContextMenu");
 	ImGui::TextWrapped("Right-click context menu with scale animation. Right-click in the box below.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -7044,6 +7118,7 @@ static void ShowUsecase_ContextMenu()
 // ============================================================
 static void ShowUsecase_BottomSheet()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_BottomSheet");
 	ImGui::TextWrapped("iOS-style bottom sheet that slides up from bottom.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -7115,6 +7190,7 @@ static void ShowUsecase_BottomSheet()
 // ============================================================
 static void ShowUsecase_Snackbar()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_Snackbar");
 	ImGui::TextWrapped("Animated cookie consent banner with slide-up entrance and button hover effects.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -7271,6 +7347,7 @@ static void ShowUsecase_Snackbar()
 // ============================================================
 static void ShowUsecase_Lightbox()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_Lightbox");
 	ImGui::TextWrapped("Image lightbox overlay with zoom animation.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -7345,6 +7422,7 @@ static void ShowUsecase_Lightbox()
 // ============================================================
 static void ShowUsecase_CommandPalette()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_CommandPalette");
 	ImGui::TextWrapped("Spotlight/Command-K style search palette.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -7413,6 +7491,7 @@ static void ShowUsecase_CommandPalette()
 // ============================================================
 static void ShowUsecase_InlineConfirmation()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_InlineConfirmation");
 	ImGui::TextWrapped("Inline delete confirmation that expands in place with hover effects.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -7537,6 +7616,7 @@ static void ShowUsecase_InlineConfirmation()
 // ============================================================
 static void ShowUsecase_UploadProgress()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_UploadProgress");
 	ImGui::TextWrapped("File upload progress with percentage and animated bar.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -7593,6 +7673,7 @@ static void ShowUsecase_UploadProgress()
 // ============================================================
 static void ShowUsecase_MultiStepProgress()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_MultiStepProgress");
 	ImGui::TextWrapped("File upload progress with animated bars and completion states.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -7705,6 +7786,7 @@ static void ShowUsecase_MultiStepProgress()
 // ============================================================
 static void ShowUsecase_InfiniteScrollLoader()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_InfiniteScrollLoader");
 	ImGui::TextWrapped("Loading indicator at the bottom of scrollable content.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -7772,6 +7854,7 @@ static void ShowUsecase_InfiniteScrollLoader()
 // ============================================================
 static void ShowUsecase_PullToRefresh()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_PullToRefresh");
 	ImGui::TextWrapped("Pull-down-to-refresh gesture indicator.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -7841,6 +7924,7 @@ static void ShowUsecase_PullToRefresh()
 // ============================================================
 static void ShowUsecase_DataFetchStates()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_DataFetchStates");
 	ImGui::TextWrapped("Loading/Success/Error states for data fetching.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -7907,6 +7991,7 @@ static void ShowUsecase_DataFetchStates()
 // ============================================================
 static void ShowUsecase_PercentageCounter()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_PercentageCounter");
 	ImGui::TextWrapped("Animated percentage counter with easing.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -7950,6 +8035,7 @@ static void ShowUsecase_PercentageCounter()
 // ============================================================
 static void ShowUsecase_SegmentedControl()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_SegmentedControl");
 	ImGui::TextWrapped("Toggle switch group with animated knob and glow effects.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -8025,6 +8111,7 @@ static void ShowUsecase_SegmentedControl()
 // ============================================================
 static void ShowUsecase_QuantityStepper()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_QuantityStepper");
 	ImGui::TextWrapped("Rotary dial/knob control with smooth rotation, tick marks, and glow effect.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -8154,6 +8241,7 @@ static void ShowUsecase_QuantityStepper()
 // ============================================================
 static void ShowUsecase_StrengthMeter()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_StrengthMeter");
 	ImGui::TextWrapped("Animated password strength meter with segmented bar and requirements checklist.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -8290,6 +8378,7 @@ static void ShowUsecase_StrengthMeter()
 // ============================================================
 static void ShowUsecase_RangeSlider()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_RangeSlider");
 	ImGui::TextWrapped("Analog joystick with spring-back animation, deadzone visualization, and directional feedback.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -8441,6 +8530,7 @@ static void ShowUsecase_RangeSlider()
 // ============================================================
 static void ShowUsecase_SearchInput()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_SearchInput");
 	ImGui::TextWrapped("Social media reaction buttons with pop animations, particle effects, and hold-to-change.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -8627,6 +8717,7 @@ static void ShowUsecase_SearchInput()
 // ============================================================
 static void ShowUsecase_StackedCards()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_StackedCards");
 	ImGui::TextWrapped("Stacked card deck with animated reveal on hover.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -8668,6 +8759,7 @@ static void ShowUsecase_StackedCards()
 // ============================================================
 static void ShowUsecase_NotificationCard()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_NotificationCard");
 	ImGui::TextWrapped("Notification card with slide-in and dismiss animation.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -8717,6 +8809,7 @@ static void ShowUsecase_NotificationCard()
 // ============================================================
 static void ShowUsecase_ProductCard()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_ProductCard");
 	ImGui::TextWrapped("Music player with animated progress, waveform visualization, and playback controls.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -8842,6 +8935,7 @@ static void ShowUsecase_ProductCard()
 // ============================================================
 static void ShowUsecase_TimelineCard()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_TimelineCard");
 	ImGui::TextWrapped("Timeline/Activity feed card with staggered animation.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -8899,6 +8993,7 @@ static void ShowUsecase_TimelineCard()
 // ============================================================
 static void ShowUsecase_HighlightText()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_HighlightText");
 	ImGui::TextWrapped("Text with animated highlight marker effect.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -8939,6 +9034,7 @@ static void ShowUsecase_HighlightText()
 // ============================================================
 static void ShowUsecase_AnimatedLabel()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_AnimatedLabel");
 	ImGui::TextWrapped("Label with animated entrance and color transition.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -8984,6 +9080,7 @@ static void ShowUsecase_AnimatedLabel()
 // ============================================================
 static void ShowUsecase_ScrollingMarquee()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_ScrollingMarquee");
 	ImGui::TextWrapped("Horizontal scrolling text marquee animation.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -9021,6 +9118,7 @@ static void ShowUsecase_ScrollingMarquee()
 // ============================================================
 static void ShowUsecase_CountdownDisplay()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_CountdownDisplay");
 	ImGui::TextWrapped("Animated countdown timer with flip-style digits.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -9073,6 +9171,7 @@ static void ShowUsecase_CountdownDisplay()
 // ============================================================
 static void ShowUsecase_WordCloud()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_WordCloud");
 	ImGui::TextWrapped("Animated word cloud with hover effects.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -9129,6 +9228,7 @@ static void ShowUsecase_WordCloud()
 // ============================================================
 static void ShowUsecase_AnimatedTooltipText()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_AnimatedTooltipText");
 	ImGui::TextWrapped("Text with animated tooltip on hover.");
 
 	// Add empty line before the interactive element
@@ -9184,6 +9284,7 @@ static void ShowUsecase_AnimatedTooltipText()
 // ============================================================
 static void ShowUsecase_CharacterReveal()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_CharacterReveal");
 	ImGui::TextWrapped("Text with per-character reveal animation.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -9226,6 +9327,7 @@ static void ShowUsecase_CharacterReveal()
 // ============================================================
 static void ShowUsecase_PulseRing()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_PulseRing");
 	ImGui::TextWrapped("Pulsating ring effect for attention/notification.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -9259,6 +9361,7 @@ static void ShowUsecase_PulseRing()
 // ============================================================
 static void ShowUsecase_MorphingShape()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_MorphingShape");
 	ImGui::TextWrapped("Shape morphing between circle and square.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -9290,6 +9393,7 @@ static void ShowUsecase_MorphingShape()
 // ============================================================
 static void ShowUsecase_BouncingDots()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_BouncingDots");
 	ImGui::TextWrapped("Bouncing dots loading animation.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -9318,6 +9422,7 @@ static void ShowUsecase_BouncingDots()
 // ============================================================
 static void ShowUsecase_ConfettiBurst()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_ConfettiBurst");
 	ImGui::TextWrapped("Celebration confetti burst animation.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -9372,6 +9477,7 @@ static void ShowUsecase_ConfettiBurst()
 // ============================================================
 static void ShowUsecase_HealthBar()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_HealthBar");
 	ImGui::TextWrapped("Game-style health bar with damage animation.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -9429,6 +9535,7 @@ static void ShowUsecase_HealthBar()
 // ============================================================
 static void ShowUsecase_CooldownTimer()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_CooldownTimer");
 	ImGui::TextWrapped("Ability cooldown with circular sweep animation.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -9483,6 +9590,7 @@ static void ShowUsecase_CooldownTimer()
 // ============================================================
 static void ShowUsecase_DamageNumber()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_DamageNumber");
 	ImGui::TextWrapped("Floating damage number with pop and fade.");
 
 	float dt = GetUsecaseDeltaTime();
@@ -9536,6 +9644,7 @@ static void ShowUsecase_DamageNumber()
 // ============================================================
 static void ShowUsecase_XPProgress()
 {
+	IMGUI_DEMO_MARKER("ShowUsecase_XPProgress");
 	ImGui::TextWrapped("Experience bar with level-up animation.");
 
 	float dt = GetUsecaseDeltaTime();

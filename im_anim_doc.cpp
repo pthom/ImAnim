@@ -13,6 +13,13 @@
 #include <math.h>
 #include <stdio.h>
 
+#ifdef IMGUI_HAS_DEMO_MARKER_CALLBACK
+#define IMGUI_DEMO_MARKER(section)  do { if (GImGuiDemoMarkerCallback) GImGuiDemoMarkerCallback("im_anim_doc", __LINE__, section, GImGuiDemoMarkerCallbackUserData); } while (0)
+#else
+#define IMGUI_DEMO_MARKER(section)
+#endif
+
+
 // ============================================================
 // HELPER: Get delta time with safety bounds
 // ============================================================
@@ -150,6 +157,7 @@ static void DocSection_TweenTypes()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_tween_float"))
 	{
+		IMGUI_DEMO_MARKER("iam_tween_float");
 		ImGui::TextWrapped(
 			"Animates a single floating-point value. Most common use case for opacity, "
 			"scale, rotation angles, progress bars, etc.");
@@ -194,6 +202,7 @@ static void DocSection_TweenTypes()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_tween_vec2"))
 	{
+		IMGUI_DEMO_MARKER("iam_tween_vec2");
 		ImGui::TextWrapped(
 			"Animates a 2D vector (ImVec2). Perfect for positions, sizes, UV coordinates, "
 			"or any paired values that should animate together.");
@@ -251,6 +260,7 @@ static void DocSection_TweenTypes()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_tween_vec4"))
 	{
+		IMGUI_DEMO_MARKER("iam_tween_vec4");
 		ImGui::TextWrapped(
 			"Animates a 4D vector (ImVec4). Useful for rectangles (x, y, w, h), "
 			"quaternions, or any four related values. For colors, prefer iam_tween_color.");
@@ -306,6 +316,7 @@ static void DocSection_TweenTypes()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_tween_int"))
 	{
+		IMGUI_DEMO_MARKER("iam_tween_int");
 		ImGui::TextWrapped(
 			"Animates an integer value with smooth interpolation. The internal calculation "
 			"uses floats, but the result is rounded. Great for counters, scores, indices.");
@@ -349,6 +360,7 @@ static void DocSection_TweenTypes()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_tween_color"))
 	{
+		IMGUI_DEMO_MARKER("iam_tween_color");
 		ImGui::TextWrapped(
 			"Animates colors with proper color space interpolation. Unlike vec4, this function "
 			"understands color theory and can blend in sRGB, linear, HSV, OKLAB, or OKLCH space.");
@@ -411,6 +423,7 @@ static void DocSection_TweenPolicies()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_policy_crossfade"))
 	{
+		IMGUI_DEMO_MARKER("iam_policy_crossfade");
 		ImGui::TextWrapped(
 			"DEFAULT. Smoothly transitions to the new target from the current position. "
 			"The animation restarts with the current value as the new start point.");
@@ -439,6 +452,7 @@ static void DocSection_TweenPolicies()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_policy_cut"))
 	{
+		IMGUI_DEMO_MARKER("iam_policy_cut");
 		ImGui::TextWrapped(
 			"Instantly snaps to the new target. No animation. Useful for state resets "
 			"or when you need immediate response.");
@@ -467,6 +481,7 @@ static void DocSection_TweenPolicies()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_policy_queue"))
 	{
+		IMGUI_DEMO_MARKER("iam_policy_queue");
 		ImGui::TextWrapped(
 			"Queues the new target to start after the current animation completes. "
 			"Only one pending target is stored (latest overwrites previous).");
@@ -512,6 +527,7 @@ static void DocSection_Easing()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Preset Easings (31 types)"))
 	{
+		IMGUI_DEMO_MARKER("Preset Easings (31 types)");
 		ImGui::TextWrapped(
 			"Standard easing functions organized by family (quad, cubic, quart, quint, sine, "
 			"expo, circ, back, elastic, bounce) with in/out/in-out variants.");
@@ -584,6 +600,7 @@ static void DocSection_Easing()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Cubic Bezier"))
 	{
+		IMGUI_DEMO_MARKER("Cubic Bezier");
 		ImGui::TextWrapped(
 			"CSS-style cubic bezier curves. Control points (x1, y1) and (x2, y2) define "
 			"the curve shape. Use cubic-bezier.com to design curves.");
@@ -618,6 +635,7 @@ static void DocSection_Easing()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Spring Physics"))
 	{
+		IMGUI_DEMO_MARKER("Spring Physics");
 		ImGui::TextWrapped(
 			"Physics-based spring animation with mass, stiffness, damping, and initial velocity. "
 			"Creates natural overshooting motion.");
@@ -657,6 +675,7 @@ static void DocSection_Easing()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Step Function"))
 	{
+		IMGUI_DEMO_MARKER("Step Function");
 		ImGui::TextWrapped(
 			"Creates a stepped animation with discrete jumps. Modes control when the jump occurs: "
 			"end (0), start (1), or both (2).");
@@ -693,6 +712,7 @@ static void DocSection_Easing()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Custom Easing Functions"))
 	{
+		IMGUI_DEMO_MARKER("Custom Easing Functions");
 		ImGui::TextWrapped(
 			"Register your own easing function in one of 16 slots. The function receives t [0,1] "
 			"and returns the eased value.");
@@ -771,6 +791,7 @@ static void DocSection_ColorSpaces()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Color Space Comparison"))
 	{
+		IMGUI_DEMO_MARKER("Color Space Comparison");
 		ImGui::TextWrapped(
 			"Watch how the same color transition looks different in each space. "
 			"OKLAB/OKLCH are perceptually uniform and avoid the 'muddy middle' problem.");
@@ -811,6 +832,7 @@ static void DocSection_ColorSpaces()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_col_srgb"))
 	{
+		IMGUI_DEMO_MARKER("iam_col_srgb");
 		ImGui::TextWrapped(
 			"Simple linear interpolation in gamma-corrected sRGB space. Fast but can produce "
 			"muddy colors when blending saturated hues.");
@@ -834,6 +856,7 @@ static void DocSection_ColorSpaces()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_col_srgb_linear"))
 	{
+		IMGUI_DEMO_MARKER("iam_col_srgb_linear");
 		ImGui::TextWrapped(
 			"Converts to linear light, blends, converts back. More physically accurate for "
 			"light mixing but still not perceptually uniform.");
@@ -854,6 +877,7 @@ static void DocSection_ColorSpaces()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_col_hsv"))
 	{
+		IMGUI_DEMO_MARKER("iam_col_hsv");
 		ImGui::TextWrapped(
 			"Blends in Hue-Saturation-Value space with shortest-arc hue interpolation. "
 			"Good for hue shifts but can have saturation dips.");
@@ -877,6 +901,7 @@ static void DocSection_ColorSpaces()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_col_oklab"))
 	{
+		IMGUI_DEMO_MARKER("iam_col_oklab");
 		ImGui::TextWrapped(
 			"RECOMMENDED. Perceptually uniform color space by Bjorn Ottosson. "
 			"Produces smooth, natural transitions without muddy midpoints.");
@@ -903,6 +928,7 @@ static void DocSection_ColorSpaces()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_col_oklch"))
 	{
+		IMGUI_DEMO_MARKER("iam_col_oklch");
 		ImGui::TextWrapped(
 			"Cylindrical form of OKLAB (Lightness, Chroma, Hue). Like HSV but perceptually "
 			"uniform. Hue uses shortest-arc interpolation.");
@@ -941,6 +967,7 @@ static void DocSection_ClipSystem()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Creating Clips"))
 	{
+		IMGUI_DEMO_MARKER("Creating Clips");
 		ImGui::TextWrapped(
 			"Clips are authored using a fluent API. Call begin(), add keyframes, configure "
 			"options, then call end() to finalize.");
@@ -998,6 +1025,7 @@ static void DocSection_ClipSystem()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Playing Clips"))
 	{
+		IMGUI_DEMO_MARKER("Playing Clips");
 		ImGui::TextWrapped(
 			"Use iam_play() to start a clip on an instance. Query values with get_float(), etc. "
 			"Control playback with pause(), resume(), seek(), stop().");
@@ -1067,6 +1095,7 @@ static void DocSection_ClipSystem()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Looping"))
 	{
+		IMGUI_DEMO_MARKER("Looping");
 		ImGui::TextWrapped(
 			"Clips can loop infinitely or a set number of times. Direction controls playback: "
 			"normal (forward), reverse (backward), or alternate (ping-pong).");
@@ -1123,6 +1152,7 @@ static void DocSection_ClipSystem()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Delayed Start"))
 	{
+		IMGUI_DEMO_MARKER("Delayed Start");
 		ImGui::TextWrapped(
 			"Add a delay before a clip starts playing. Useful for sequencing animations "
 			"or waiting for other events.");
@@ -1171,6 +1201,7 @@ static void DocSection_ClipSystem()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Timing Variation"))
 	{
+		IMGUI_DEMO_MARKER("Timing Variation");
 		ImGui::TextWrapped(
 			"Vary timing parameters on each loop iteration. Great for organic feel - "
 			"bouncing balls that slow down, or animations that speed up.");
@@ -1224,6 +1255,7 @@ static void DocSection_ClipSystem()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Multi-Channel Clips"))
 	{
+		IMGUI_DEMO_MARKER("Multi-Channel Clips");
 		ImGui::TextWrapped(
 			"A single clip can animate multiple channels simultaneously. Each channel has "
 			"independent keyframes and timing.");
@@ -1306,6 +1338,7 @@ static void DocSection_ClipSystem()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Stagger"))
 	{
+		IMGUI_DEMO_MARKER("Stagger");
 		ImGui::TextWrapped(
 			"Stagger automatically distributes delay across multiple instances. Perfect for "
 			"list animations where items appear sequentially.");
@@ -1389,6 +1422,7 @@ static void DocSection_ClipSystem()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Animation Chaining"))
 	{
+		IMGUI_DEMO_MARKER("Animation Chaining");
 		ImGui::TextWrapped(
 			"Chain clips together so one plays after another completes. Use then() on an "
 			"instance to queue the next clip.");
@@ -1474,6 +1508,7 @@ static void DocSection_ClipSystem()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Timeline Markers"))
 	{
+		IMGUI_DEMO_MARKER("Timeline Markers");
 		ImGui::TextWrapped(
 			"Markers trigger callbacks at specific times during playback. Useful for "
 			"synchronizing sound effects, spawning particles, etc.");
@@ -1540,6 +1575,7 @@ static void DocSection_ClipSystem()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Repeat Variation"))
 	{
+		IMGUI_DEMO_MARKER("Repeat Variation");
 		ImGui::TextWrapped(
 			"Variation modifies keyframe values on each loop iteration. Create dynamic "
 			"animations where values increment, randomize, or follow patterns.");
@@ -1627,6 +1663,7 @@ static void DocSection_ClipSystem()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Sequential & Parallel Groups"))
 	{
+		IMGUI_DEMO_MARKER("Sequential & Parallel Groups");
 		ImGui::TextWrapped(
 			"Organize keyframes into groups. Sequential groups play one after another. "
 			"Parallel groups start at the same time.");
@@ -1722,6 +1759,7 @@ static void DocSection_MotionPaths()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Creating Paths"))
 	{
+		IMGUI_DEMO_MARKER("Creating Paths");
 		ImGui::TextWrapped(
 			"Build paths using the fluent API. Start with begin(), add segments, "
 			"optionally close(), then call end().");
@@ -1782,6 +1820,7 @@ static void DocSection_MotionPaths()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Path Evaluation"))
 	{
+		IMGUI_DEMO_MARKER("Path Evaluation");
 		ImGui::TextWrapped(
 			"Sample position, tangent, or angle at any point along the path. "
 			"Use arc-length parameterization for constant-speed animation.");
@@ -1863,6 +1902,7 @@ static void DocSection_MotionPaths()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Animating Along Paths"))
 	{
+		IMGUI_DEMO_MARKER("Animating Along Paths");
 		ImGui::TextWrapped(
 			"Use iam_tween_path() to animate position along a path with easing.");
 
@@ -1970,6 +2010,7 @@ static void DocSection_MotionPaths()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Path Morphing"))
 	{
+		IMGUI_DEMO_MARKER("Path Morphing");
 		ImGui::TextWrapped(
 			"Smoothly blend between two different paths. Great for shape transitions.");
 
@@ -2084,6 +2125,7 @@ static void DocSection_Procedural()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Oscillators"))
 	{
+		IMGUI_DEMO_MARKER("Oscillators");
 		ImGui::TextWrapped(
 			"Continuous periodic animation with four wave types: sine, triangle, sawtooth, square.");
 
@@ -2137,6 +2179,7 @@ static void DocSection_Procedural()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Shake"))
 	{
+		IMGUI_DEMO_MARKER("Shake");
 		ImGui::TextWrapped(
 			"Decaying random shake for impact feedback. Trigger with iam_trigger_shake().");
 
@@ -2189,6 +2232,7 @@ static void DocSection_Procedural()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Wiggle"))
 	{
+		IMGUI_DEMO_MARKER("Wiggle");
 		ImGui::TextWrapped(
 			"Continuous smooth random movement. Unlike shake, it doesn't decay.");
 
@@ -2222,6 +2266,7 @@ static void DocSection_Procedural()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Noise Channels"))
 	{
+		IMGUI_DEMO_MARKER("Noise Channels");
 		ImGui::TextWrapped(
 			"Multi-octave noise for complex organic motion. Supports Perlin, Simplex, "
 			"Value, and Worley noise types.");
@@ -2324,6 +2369,7 @@ static void DocSection_TextAnimation()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Text Along Path"))
 	{
+		IMGUI_DEMO_MARKER("Text Along Path");
 		ImGui::TextWrapped(
 			"Render text following a motion path curve. Each character is positioned "
 			"and rotated to follow the path tangent.");
@@ -2412,6 +2458,7 @@ static void DocSection_TextAnimation()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Text Stagger"))
 	{
+		IMGUI_DEMO_MARKER("Text Stagger");
 		ImGui::TextWrapped(
 			"Per-character animation with staggered timing. Multiple effects available: "
 			"fade, scale, slide, rotate, bounce, wave, typewriter.");
@@ -2489,6 +2536,7 @@ static void DocSection_Advanced()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Style Interpolation"))
 	{
+		IMGUI_DEMO_MARKER("Style Interpolation");
 		ImGui::TextWrapped(
 			"Smoothly transition between ImGui themes by interpolating all style properties.");
 
@@ -2564,6 +2612,7 @@ static void DocSection_Advanced()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Gradient Animation"))
 	{
+		IMGUI_DEMO_MARKER("Gradient Animation");
 		ImGui::TextWrapped(
 			"Animate between color gradients with proper color space interpolation.");
 
@@ -2650,6 +2699,7 @@ static void DocSection_Advanced()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Transform Animation"))
 	{
+		IMGUI_DEMO_MARKER("Transform Animation");
 		ImGui::TextWrapped(
 			"Animate 2D transforms (position, rotation, scale) with proper rotation interpolation.");
 
@@ -2739,6 +2789,7 @@ static void DocSection_Advanced()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Rotation Modes"))
 	{
+		IMGUI_DEMO_MARKER("Rotation Modes");
 		ImGui::TextWrapped(
 			"Control how rotation angles are interpolated. Different modes handle the "
 			"wrap-around at 360 degrees differently, letting you control which direction "
@@ -2847,6 +2898,7 @@ static void DocSection_Advanced()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Relative Tweens (Resize-Friendly)"))
 	{
+		IMGUI_DEMO_MARKER("Relative Tweens (Resize-Friendly)");
 		ImGui::TextWrapped(
 			"Animate values relative to window/viewport size. Animations survive resizes.");
 
@@ -2876,6 +2928,7 @@ static void DocSection_Advanced()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Resolved Tweens (Dynamic Targets)"))
 	{
+		IMGUI_DEMO_MARKER("Resolved Tweens (Dynamic Targets)");
 		ImGui::TextWrapped(
 			"Use callbacks to compute targets dynamically each frame. The target is "
 			"resolved every frame, allowing animations to chase moving targets.");
@@ -2939,6 +2992,7 @@ static void DocSection_Advanced()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Rebase (Redirect In-Progress Animation)"))
 	{
+		IMGUI_DEMO_MARKER("Rebase (Redirect In-Progress Animation)");
 		ImGui::TextWrapped(
 			"Change the target of an animation without restarting from the beginning. "
 			"The animation smoothly redirects to the new target from its current position.");
@@ -2995,6 +3049,7 @@ static void DocSection_Advanced()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Drag Feedback"))
 	{
+		IMGUI_DEMO_MARKER("Drag Feedback");
 		ImGui::TextWrapped(
 			"Animated feedback for drag operations with snap-to-grid and overshoot. "
 			"Provides smooth visual response during and after dragging.");
@@ -3119,6 +3174,7 @@ static void DocSection_FrameManagement()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Frame Loop Setup"))
 	{
+		IMGUI_DEMO_MARKER("Frame Loop Setup");
 		ImGui::TextWrapped(
 			"Call these functions every frame in your main loop.");
 
@@ -3152,6 +3208,7 @@ static void DocSection_FrameManagement()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Global Time Scale"))
 	{
+		IMGUI_DEMO_MARKER("Global Time Scale");
 		ImGui::TextWrapped(
 			"Slow down or speed up all animations globally. Useful for debugging or effects.");
 
@@ -3180,6 +3237,7 @@ static void DocSection_FrameManagement()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Memory Management"))
 	{
+		IMGUI_DEMO_MARKER("Memory Management");
 		ImGui::TextWrapped(
 			"Pre-allocate pools to avoid runtime allocations. Use GC to clean up stale channels.");
 
@@ -3212,6 +3270,7 @@ static void DocSection_FrameManagement()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Lazy Initialization"))
 	{
+		IMGUI_DEMO_MARKER("Lazy Initialization");
 		ImGui::TextWrapped(
 			"By default, channels are only created when the target differs from zero. "
 			"Disable for immediate allocation.");
@@ -3230,6 +3289,7 @@ static void DocSection_FrameManagement()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Performance Profiling"))
 	{
+		IMGUI_DEMO_MARKER("Performance Profiling");
 		ImGui::TextWrapped(
 			"Built-in profiler for measuring animation system overhead.");
 
@@ -3266,6 +3326,7 @@ static void DocSection_ScrollAnimation()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Scroll To Position"))
 	{
+		IMGUI_DEMO_MARKER("Scroll To Position");
 		ImGui::TextWrapped(
 			"Scroll the current window to a specific X or Y position with animation.");
 
@@ -3288,6 +3349,7 @@ static void DocSection_ScrollAnimation()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Scroll To Top/Bottom"))
 	{
+		IMGUI_DEMO_MARKER("Scroll To Top/Bottom");
 		ImGui::TextWrapped(
 			"Convenience functions to scroll to the beginning or end of content.");
 
@@ -3334,6 +3396,7 @@ static void DocSection_PerAxisEasing()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_ease_per_axis"))
 	{
+		IMGUI_DEMO_MARKER("iam_ease_per_axis");
 		ImGui::TextWrapped(
 			"Structure holding separate easing descriptors for X, Y, Z, and W components.");
 
@@ -3357,6 +3420,7 @@ static void DocSection_PerAxisEasing()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_tween_vec2_per_axis"))
 	{
+		IMGUI_DEMO_MARKER("iam_tween_vec2_per_axis");
 		ImGui::TextWrapped(
 			"Animate a vec2 with different easing per axis. The X and Y components "
 			"animate independently with their own curves.");
@@ -3426,6 +3490,7 @@ static void DocSection_PerAxisEasing()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_tween_vec4/color_per_axis"))
 	{
+		IMGUI_DEMO_MARKER("iam_tween_vec4/color_per_axis");
 		ImGui::TextWrapped(
 			"Same concept for vec4 and colors. Each of the 4 components gets its own easing.");
 
@@ -3555,6 +3620,7 @@ static void DocSection_ArcLength()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Building Arc-Length LUT"))
 	{
+		IMGUI_DEMO_MARKER("Building Arc-Length LUT");
 		ImGui::TextWrapped(
 			"Build a lookup table (LUT) to convert between arc-length distance and parameter t. "
 			"This is done once per path and enables constant-speed animation.");
@@ -3664,6 +3730,7 @@ static void DocSection_ArcLength()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Distance-Based Evaluation"))
 	{
+		IMGUI_DEMO_MARKER("Distance-Based Evaluation");
 		ImGui::TextWrapped(
 			"Once a LUT is built, evaluate paths using distance instead of parameter t. "
 			"This gives constant speed regardless of curve curvature.");
@@ -3804,6 +3871,7 @@ static void DocSection_Layering()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Layer Blending"))
 	{
+		IMGUI_DEMO_MARKER("Layer Blending");
 		ImGui::TextWrapped(
 			"Blend multiple animation instances into a single output. Each instance "
 			"contributes based on its weight. Weights are normalized automatically.");
@@ -3893,6 +3961,7 @@ static void DocSection_Layering()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Instance Weight"))
 	{
+		IMGUI_DEMO_MARKER("Instance Weight");
 		ImGui::TextWrapped(
 			"Set the weight of an individual instance for blending purposes.");
 
@@ -4039,6 +4108,7 @@ static void DocSection_ClipCallbacks()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Callback Types"))
 	{
+		IMGUI_DEMO_MARKER("Callback Types");
 		ImGui::TextWrapped(
 			"Three callback points are available for each clip.");
 
@@ -4067,6 +4137,7 @@ static void DocSection_ClipCallbacks()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Common Use Cases"))
 	{
+		IMGUI_DEMO_MARKER("Common Use Cases");
 		ImGui::TextWrapped(
 			"Examples of how to use clip callbacks effectively.");
 
@@ -4100,6 +4171,7 @@ static void DocSection_ClipCallbacks()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Interactive Example##clip_callbacks"))
 	{
+		IMGUI_DEMO_MARKER("Interactive Example##clip_callbacks");
 		ImGui::TextWrapped(
 			"Watch the callback indicators light up as the animation plays.");
 
@@ -4235,6 +4307,7 @@ static void DocSection_AnchorRelativeKeyframes()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("key_*_rel Functions"))
 	{
+		IMGUI_DEMO_MARKER("key_*_rel Functions");
 		ImGui::TextWrapped(
 			"Create keyframes with values relative to an anchor space (window, viewport, etc.).");
 
@@ -4274,6 +4347,7 @@ static void DocSection_AnchorRelativeKeyframes()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Vec4 and Color Relative"))
 	{
+		IMGUI_DEMO_MARKER("Vec4 and Color Relative");
 		ImGui::TextWrapped(
 			"Vec4 relative uses x,y as percentages; z,w remain absolute. "
 			"Color relative is for position-based color effects.");
@@ -4305,6 +4379,7 @@ static void DocSection_AnchorRelativeKeyframes()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Interactive Example##anchor_keyframes"))
 	{
+		IMGUI_DEMO_MARKER("Interactive Example##anchor_keyframes");
 		ImGui::TextWrapped(
 			"This circle animates from left to right edge. Click to toggle position!");
 
@@ -4389,6 +4464,7 @@ static void DocSection_SpringKeyframes()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Spring Parameters"))
 	{
+		IMGUI_DEMO_MARKER("Spring Parameters");
 		ImGui::TextWrapped(
 			"Configure spring behavior with physics parameters.");
 
@@ -4413,6 +4489,7 @@ static void DocSection_SpringKeyframes()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Tuning Spring Feel"))
 	{
+		IMGUI_DEMO_MARKER("Tuning Spring Feel");
 		ImGui::TextWrapped(
 			"Different parameter combinations create different animation feels.");
 
@@ -4519,6 +4596,7 @@ static void DocSection_ClipPersistence()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Save and Load Clips"))
 	{
+		IMGUI_DEMO_MARKER("Save and Load Clips");
 		ImGui::TextWrapped(
 			"Serialize clip definitions to disk and load them back at runtime.");
 
@@ -4552,6 +4630,7 @@ static void DocSection_ClipPersistence()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Interactive Save/Load Demo"))
 	{
+		IMGUI_DEMO_MARKER("Interactive Save/Load Demo");
 		ImGui::TextWrapped(
 			"Modify the middle keyframe value, save the clip, then change it again. "
 			"Load to restore the saved state.");
@@ -4737,6 +4816,7 @@ static void DocSection_UtilityFunctions()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_get_blended_color"))
 	{
+		IMGUI_DEMO_MARKER("iam_get_blended_color");
 		ImGui::TextWrapped(
 			"Blend two sRGB colors in any color space. Useful for custom color calculations.");
 
@@ -4779,6 +4859,7 @@ static void DocSection_UtilityFunctions()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_anchor_size"))
 	{
+		IMGUI_DEMO_MARKER("iam_anchor_size");
 		ImGui::TextWrapped(
 			"Get the current size of an anchor space for layout calculations.");
 
@@ -4807,6 +4888,7 @@ static void DocSection_UtilityFunctions()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_eval_preset"))
 	{
+		IMGUI_DEMO_MARKER("iam_eval_preset");
 		ImGui::TextWrapped(
 			"Evaluate a preset easing function at any t value. Useful for custom calculations.");
 
@@ -4829,6 +4911,7 @@ static void DocSection_UtilityFunctions()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Clip Information"))
 	{
+		IMGUI_DEMO_MARKER("Clip Information");
 		ImGui::TextWrapped(
 			"Query information about registered clips.");
 
@@ -4853,6 +4936,7 @@ static void DocSection_UtilityFunctions()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_set_ease_lut_samples"))
 	{
+		IMGUI_DEMO_MARKER("iam_set_ease_lut_samples");
 		ImGui::TextWrapped(
 			"Configure the resolution of lookup tables used for parametric easings "
 			"(cubic bezier, spring). Higher values = more accuracy, more memory.");
@@ -4884,6 +4968,7 @@ static void DocSection_SmoothNoise()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Smooth Noise Functions"))
 	{
+		IMGUI_DEMO_MARKER("Smooth Noise Functions");
 		ImGui::TextWrapped(
 			"Convenience functions for smooth random movement without configuring noise options.");
 
@@ -4919,6 +5004,7 @@ static void DocSection_SmoothNoise()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Interactive Example##smooth_noise"))
 	{
+		IMGUI_DEMO_MARKER("Interactive Example##smooth_noise");
 		static float amplitude = 20.0f;
 		static float speed = 1.5f;
 
@@ -4959,6 +5045,7 @@ static void DocSection_PathMorphingTween()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_tween_path_morph"))
 	{
+		IMGUI_DEMO_MARKER("iam_tween_path_morph");
 		ImGui::TextWrapped(
 			"Animate along a morphing path with separate easing for path progress and morph blend.");
 
@@ -4987,6 +5074,7 @@ static void DocSection_PathMorphingTween()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Morph Options"))
 	{
+		IMGUI_DEMO_MARKER("Morph Options");
 		ImGui::TextWrapped(
 			"Configure how paths are resampled and blended.");
 
@@ -5010,6 +5098,7 @@ static void DocSection_PathMorphingTween()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Interactive Example##path_morphing"))
 	{
+		IMGUI_DEMO_MARKER("Interactive Example##path_morphing");
 		ImGui::TextWrapped(
 			"Morph between a circle and a square path while animating position.");
 
@@ -5099,6 +5188,7 @@ static void DocSection_CurveFunctions()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Bezier Curves"))
 	{
+		IMGUI_DEMO_MARKER("Bezier Curves");
 		ImGui::TextWrapped(
 			"Evaluate quadratic and cubic Bezier curves at any parameter t.");
 
@@ -5170,6 +5260,7 @@ static void DocSection_CurveFunctions()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Catmull-Rom Splines"))
 	{
+		IMGUI_DEMO_MARKER("Catmull-Rom Splines");
 		ImGui::TextWrapped(
 			"Catmull-Rom splines pass through the middle control points (p1, p2). "
 			"p0 and p3 influence the curve shape but aren't on the curve.");
@@ -5194,6 +5285,7 @@ static void DocSection_CurveFunctions()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Interactive Example##curve_functions"))
 	{
+		IMGUI_DEMO_MARKER("Interactive Example##curve_functions");
 		ImGui::TextWrapped(
 			"Cubic Bezier with draggable control points and tangent visualization.");
 
@@ -5278,6 +5370,7 @@ static void DocSection_QuadTransforms()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_transform_quad"))
 	{
+		IMGUI_DEMO_MARKER("iam_transform_quad");
 		ImGui::TextWrapped(
 			"Transform an array of 4 vertices (quad) by rotation and translation.");
 
@@ -5335,6 +5428,7 @@ static void DocSection_QuadTransforms()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_make_glyph_quad"))
 	{
+		IMGUI_DEMO_MARKER("iam_make_glyph_quad");
 		ImGui::TextWrapped(
 			"Create a rotated quad for a text glyph positioned on a path.");
 
@@ -5363,6 +5457,7 @@ static void DocSection_QuadTransforms()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Visual Example: Rotating Quads"))
 	{
+		IMGUI_DEMO_MARKER("Visual Example: Rotating Quads");
 		ImGui::TextWrapped(
 			"Interactive demo showing quad transformation with rotation and translation.");
 
@@ -5440,6 +5535,7 @@ static void DocSection_TextSizing()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_text_path_width"))
 	{
+		IMGUI_DEMO_MARKER("iam_text_path_width");
 		ImGui::TextWrapped(
 			"Get the total width of text as it would be rendered along a path.");
 
@@ -5465,6 +5561,7 @@ static void DocSection_TextSizing()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("iam_text_stagger_width/duration"))
 	{
+		IMGUI_DEMO_MARKER("iam_text_stagger_width/duration");
 		ImGui::TextWrapped(
 			"Get width and animation duration for staggered text.");
 
@@ -5491,6 +5588,7 @@ static void DocSection_TextSizing()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Visual Example: Text Sizing Demo"))
 	{
+		IMGUI_DEMO_MARKER("Visual Example: Text Sizing Demo");
 		ImGui::TextWrapped(
 			"Shows how text sizing helpers calculate dimensions for layout planning.");
 
@@ -5557,6 +5655,7 @@ static void DocSection_GradientHelpers()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Gradient Factory Methods"))
 	{
+		IMGUI_DEMO_MARKER("Gradient Factory Methods");
 		ImGui::TextWrapped(
 			"Quick constructors for common gradient patterns.");
 
@@ -5597,6 +5696,7 @@ static void DocSection_GradientHelpers()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Visual Example: Gradient Gallery"))
 	{
+		IMGUI_DEMO_MARKER("Visual Example: Gradient Gallery");
 		ImGui::TextWrapped(
 			"Visual comparison of different gradient factory methods and color spaces.");
 
@@ -5664,6 +5764,7 @@ static void DocSection_StyleHelpers()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Style Management"))
 	{
+		IMGUI_DEMO_MARKER("Style Management");
 		ImGui::TextWrapped(
 			"Register, query, and remove style snapshots.");
 
@@ -5707,6 +5808,7 @@ static void DocSection_TransformMatrix()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Matrix Conversion"))
 	{
+		IMGUI_DEMO_MARKER("Matrix Conversion");
 		ImGui::TextWrapped(
 			"Convert transforms to/from 3x2 matrices (row-major format).");
 
@@ -5735,6 +5837,7 @@ static void DocSection_TransformMatrix()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Visual Example: Matrix Visualization"))
 	{
+		IMGUI_DEMO_MARKER("Visual Example: Matrix Visualization");
 		ImGui::TextWrapped(
 			"Interactive demo showing transform-to-matrix conversion with animated parameters.");
 
@@ -5830,6 +5933,7 @@ static void DocSection_DebugTools()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Debug Timeline"))
 	{
+		IMGUI_DEMO_MARKER("Debug Timeline");
 		ImGui::TextWrapped(
 			"Visual timeline showing clip tracks, keyframes, and playhead position. "
 			"Hover keyframes to see values.");
@@ -5847,6 +5951,7 @@ static void DocSection_DebugTools()
 	DocApplyOpenAll();
 	if (ImGui::TreeNode("Unified Inspector"))
 	{
+		IMGUI_DEMO_MARKER("Unified Inspector");
 		ImGui::TextWrapped(
 			"Comprehensive debug window showing all active animations, pools, and system state.");
 
