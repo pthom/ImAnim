@@ -15,10 +15,6 @@
 #include <SDL_opengl.h>
 #endif
 
-extern void ImAnimDemoWindow();
-extern void ImAnimDocWindow();
-extern void ImAnimUsecaseWindow();
-
 int main(int, char**)
 {
     // Setup SDL
