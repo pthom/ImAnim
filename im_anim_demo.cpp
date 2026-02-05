@@ -15,6 +15,14 @@
 #include <math.h>
 #include <stdio.h>
 
+// Helper to wire demo markers located in code to an interactive browser (e.g. imgui_explorer)
+#if IMGUI_VERSION_NUM >= 19263
+namespace ImGui { extern IMGUI_API void DemoMarker(const char* file, int line, const char* section); };
+#define IMGUI_DEMO_MARKER(section)  do { ImGui::DemoMarker("im_anim_demo.cpp", __LINE__, section); } while (0)
+#else
+#define IMGUI_DEMO_MARKER(section)
+#endif
+
 #ifdef IM_ANIM_PRE_19200_COMPATIBILITY
 constexpr auto ImGuiChildFlags_Borders = ImGuiChildFlags_Border;
 #endif
@@ -801,6 +809,7 @@ static void ShowHeroAnimation()
 // ============================================================
 static void ShowEasingDemo()
 {
+	IMGUI_DEMO_MARKER("ShowEasingDemo");
 	float dt = GetSafeDeltaTime();
 
 	ImGui::TextWrapped(
@@ -921,6 +930,7 @@ static void ShowEasingDemo()
 	// Custom easing section
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Custom Bezier Curve")) {
+		IMGUI_DEMO_MARKER("Custom Bezier Curve");
 		static float bezier[4] = { 0.25f, 0.1f, 0.25f, 1.0f };
 		static float bezier_preview_time = 0.0f;
 		static bool bezier_playing = false;
@@ -999,6 +1009,7 @@ static void ShowEasingDemo()
 
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Spring Physics")) {
+		IMGUI_DEMO_MARKER("Spring Physics");
 		static float mass = 1.0f, stiffness = 120.0f, damping = 20.0f, v0 = 0.0f;
 		static float spring_preview_time = 0.0f;
 		static bool spring_playing = false;
@@ -1090,6 +1101,7 @@ static void ShowEasingDemo()
 
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Steps Easing")) {
+		IMGUI_DEMO_MARKER("Steps Easing");
 		static int step_count = 5;
 		static int step_mode = 0;  // 0=end, 1=start, 2=both
 		static float steps_preview_time = 0.0f;
@@ -1182,6 +1194,7 @@ static void ShowEasingDemo()
 
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Easing Gallery")) {
+		IMGUI_DEMO_MARKER("Easing Gallery");
 		ImGui::TextWrapped(
 			"Visual grid showing all standard easing functions side-by-side. "
 			"Red disc shows X (time), green disc shows Y (eased value).");
@@ -1368,6 +1381,7 @@ static float CustomEaseWobble(float t) {
 
 static void ShowCustomEasingDemo()
 {
+	IMGUI_DEMO_MARKER("ShowCustomEasingDemo");
 	float dt = GetSafeDeltaTime();
 
 	ImGui::TextWrapped(
@@ -1452,6 +1466,7 @@ ImGuiID GetID(int n){
 // ============================================================
 static void ShowBasicTweensDemo()
 {
+	IMGUI_DEMO_MARKER("ShowBasicTweensDemo");
 	float dt = GetSafeDeltaTime();
 
 	ImGui::TextWrapped(
@@ -1464,6 +1479,7 @@ static void ShowBasicTweensDemo()
 	// Float tween
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Float Tween")) {
+		IMGUI_DEMO_MARKER("Float Tween");
 		static float target = 50.0f;
 		ImGui::SliderFloat("Target", &target, 0.0f, 100.0f);
 
@@ -1481,6 +1497,7 @@ static void ShowBasicTweensDemo()
 	// Vec2 tween
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Vec2 Tween")) {
+		IMGUI_DEMO_MARKER("Vec2 Tween");
 		static ImVec2 target(150.0f, 80.0f);
 		ImGui::SliderFloat2("Target", &target.x, 0.0f, 280.0f);
 
@@ -1510,6 +1527,7 @@ static void ShowBasicTweensDemo()
 	// Int tween
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Int Tween")) {
+		IMGUI_DEMO_MARKER("Int Tween");
 		static int target = 50;
 		ImGui::SliderInt("Target", &target, 0, 100);
 
@@ -1524,6 +1542,7 @@ static void ShowBasicTweensDemo()
 	// Vec4 tween
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Vec4 Tween")) {
+		IMGUI_DEMO_MARKER("Vec4 Tween");
 		static ImVec4 target(1.0f, 0.5f, 0.2f, 1.0f);
 		ImGui::ColorEdit4("Target", &target.x);
 
@@ -1589,6 +1608,7 @@ static void ShowBasicTweensDemo()
 	// Staggered wave animation
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Staggered Wave Animation")) {
+		IMGUI_DEMO_MARKER("Staggered Wave Animation");
 		ImGui::TextDisabled("Multiple items with offset timing create a wave effect");
 		ImGui::Spacing();
 
@@ -1643,6 +1663,7 @@ static void ShowBasicTweensDemo()
 	// Spring physics comparison
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Spring Physics Comparison")) {
+		IMGUI_DEMO_MARKER("Spring Physics Comparison");
 		ImGui::TextDisabled("Compare different spring parameters - adjust stiffness and damping");
 		ImGui::Spacing();
 
@@ -1694,6 +1715,7 @@ static void ShowBasicTweensDemo()
 	// Smooth counter animation
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Animated Counter")) {
+		IMGUI_DEMO_MARKER("Animated Counter");
 		ImGui::TextDisabled("Smooth number counting animation using int tweens");
 		ImGui::Spacing();
 
@@ -1724,6 +1746,7 @@ static void ShowBasicTweensDemo()
 // ============================================================
 static void ShowColorTweensDemo()
 {
+	IMGUI_DEMO_MARKER("ShowColorTweensDemo");
 	float dt = GetSafeDeltaTime();
 
 	ImGui::TextWrapped(
@@ -1768,6 +1791,7 @@ static void ShowColorTweensDemo()
 // ============================================================
 static void ShowPerAxisEasingDemo()
 {
+	IMGUI_DEMO_MARKER("ShowPerAxisEasingDemo");
 	float dt = GetSafeDeltaTime();
 
 	ImGui::TextWrapped(
@@ -1779,6 +1803,7 @@ static void ShowPerAxisEasingDemo()
 	// Demo 1: Vec2 with different X and Y easing
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Vec2 Per-Axis")) {
+		IMGUI_DEMO_MARKER("Vec2 Per-Axis");
 		static int ease_x = 2;   // Out Cubic
 		static int ease_y = 10;  // Out Bounce
 		static ImVec2 target_pos(300, 100);
@@ -1834,6 +1859,7 @@ static void ShowPerAxisEasingDemo()
 	// Demo 2: Color with per-channel easing
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Color Per-Channel")) {
+		IMGUI_DEMO_MARKER("Color Per-Channel");
 		static int ease_r = 2;  // Out Cubic
 		static int ease_g = 5;  // Out Bounce
 		static int ease_b = 4;  // Out Elastic
@@ -1887,6 +1913,7 @@ static void ShowPerAxisEasingDemo()
 	// Demo 3: Practical example - bounce landing effect
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Bounce Landing Effect")) {
+		IMGUI_DEMO_MARKER("Bounce Landing Effect");
 		static float drop_timer = 0.0f;
 		static bool dropping = false;
 
@@ -1937,6 +1964,7 @@ static void ShowPerAxisEasingDemo()
 // ============================================================
 static void ShowPoliciesDemo()
 {
+	IMGUI_DEMO_MARKER("ShowPoliciesDemo");
 	float dt = GetSafeDeltaTime();
 
 	ImGui::TextWrapped(
@@ -1994,6 +2022,7 @@ static void ShowPoliciesDemo()
 	// Visual policy comparison - each policy in its own horizontal lane
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Visual Comparison")) {
+		IMGUI_DEMO_MARKER("Visual Comparison");
 		ImGui::TextWrapped("Each row shows the same animation with different policies. "
 			"Click buttons rapidly to see differences:");
 		ImGui::BulletText("Cut (green): Jumps instantly to target");
@@ -2086,6 +2115,7 @@ static void ShowPoliciesDemo()
 // ============================================================
 static void ShowWidgetsDemo()
 {
+	IMGUI_DEMO_MARKER("ShowWidgetsDemo");
 	float dt = GetSafeDeltaTime();
 
 	ImGui::TextWrapped(
@@ -2097,6 +2127,7 @@ static void ShowWidgetsDemo()
 	// Animated buttons - using fixed layout to prevent movement
 	ApplyOpenAll();
 	if (ImGui::TreeNodeEx("Animated Buttons")) {
+		IMGUI_DEMO_MARKER("Animated Buttons");
 		ImGui::TextDisabled("Hover over buttons to see animation effects");
 		ImGui::Spacing();
 
@@ -2156,6 +2187,7 @@ static void ShowWidgetsDemo()
 	// Animated toggle
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Animated Toggle")) {
+		IMGUI_DEMO_MARKER("Animated Toggle");
 		static bool toggle_state = false;
 
 		ImGuiID id = ImHashStr("toggle_demo");
@@ -2193,6 +2225,7 @@ static void ShowWidgetsDemo()
 	// Hover card - larger
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Hover Card")) {
+		IMGUI_DEMO_MARKER("Hover Card");
 		ImGuiID id = ImHashStr("card_demo");
 
 		ImVec2 card_size(480, 140);
@@ -2519,6 +2552,7 @@ static void InitDemoClips()
 
 static void ShowClipSystemDemo()
 {
+	IMGUI_DEMO_MARKER("ShowClipSystemDemo");
 	float dt = GetSafeDeltaTime();
 	InitDemoClips();
 
@@ -2634,6 +2668,7 @@ static void ShowClipSystemDemo()
 	// Looping animations
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Looping Animations")) {
+		IMGUI_DEMO_MARKER("Looping Animations");
 		static ImGuiID inst_id = ImHashStr("loop_inst");
 		static bool playing = false;
 
@@ -2677,6 +2712,7 @@ static void ShowClipSystemDemo()
 	// Playback control
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Playback Control")) {
+		IMGUI_DEMO_MARKER("Playback Control");
 		static ImGuiID inst_id = ImHashStr("control_inst");
 
 		ImGui::Text("Controls:");
@@ -2726,6 +2762,7 @@ static void ShowClipSystemDemo()
 	// Delayed playback
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Delayed Playback")) {
+		IMGUI_DEMO_MARKER("Delayed Playback");
 		ImGui::TextWrapped("set_delay() adds a delay before the animation starts playing.");
 
 		static ImGuiID inst_id = ImHashStr("delayed_inst");
@@ -2771,6 +2808,7 @@ static void ShowClipSystemDemo()
 	// Callbacks demo
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Callbacks")) {
+		IMGUI_DEMO_MARKER("Callbacks");
 		ImGui::TextWrapped(
 			"on_begin(), on_update(), and on_complete() let you hook into animation lifecycle events.");
 
@@ -2810,6 +2848,7 @@ static void ShowClipSystemDemo()
 	// Integer keyframes demo
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Integer Keyframes")) {
+		IMGUI_DEMO_MARKER("Integer Keyframes");
 		ImGui::TextWrapped(
 			"key_int() animates integer values (useful for counters, frame indices, etc.).");
 
@@ -2837,6 +2876,7 @@ static void ShowClipSystemDemo()
 	// Sequential Timeline demo
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Sequential Timeline (seq_begin/end)")) {
+		IMGUI_DEMO_MARKER("Sequential Timeline (seq_begin/end)");
 		ImGui::TextWrapped(
 			"seq_begin()/seq_end() groups keyframes that play in sequence. "
 			"Each group starts after the previous one completes.");
@@ -2879,6 +2919,7 @@ static void ShowClipSystemDemo()
 	// Parallel Timeline demo
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Parallel Timeline (par_begin/end)")) {
+		IMGUI_DEMO_MARKER("Parallel Timeline (par_begin/end)");
 		ImGui::TextWrapped(
 			"par_begin()/par_end() groups keyframes that play simultaneously. "
 			"All animations in the group start at the same time.");
@@ -2922,6 +2963,7 @@ static void ShowClipSystemDemo()
 	// Stagger demo
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Stagger Animation")) {
+		IMGUI_DEMO_MARKER("Stagger Animation");
 		ImGui::TextWrapped(
 			"set_stagger() applies progressive delays for animating multiple items. "
 			"Each element pops in with a cascading wave effect.");
@@ -3008,6 +3050,7 @@ static void ShowClipSystemDemo()
 	// Stagger List demo
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Stagger: List Slide-In")) {
+		IMGUI_DEMO_MARKER("Stagger: List Slide-In");
 		ImGui::TextWrapped(
 			"Classic list animation with items sliding in from the left.");
 
@@ -3087,6 +3130,7 @@ static void ShowClipSystemDemo()
 	// Stagger Grid demo
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Stagger: Grid Reveal")) {
+		IMGUI_DEMO_MARKER("Stagger: Grid Reveal");
 		ImGui::TextWrapped(
 			"Grid items appearing with scale and subtle rotation.");
 
@@ -3176,6 +3220,7 @@ static void ShowClipSystemDemo()
 	// Stagger Cards demo
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Stagger: Dropping Cards")) {
+		IMGUI_DEMO_MARKER("Stagger: Dropping Cards");
 		ImGui::TextWrapped(
 			"Cards dropping in from above with a bounce effect.");
 
@@ -3283,6 +3328,7 @@ static void ShowClipSystemDemo()
 	// ============================================================
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Variation: Bouncing Ball Decay")) {
+		IMGUI_DEMO_MARKER("Variation: Bouncing Ball Decay");
 		ImGui::TextWrapped(
 			"A bouncing ball where each bounce gets lower (70%% of previous height) "
 			"and faster (85%% of previous duration). Uses iam_varf_mul() for multiplicative decay.");
@@ -3334,6 +3380,7 @@ static void ShowClipSystemDemo()
 
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Variation: Scale Decay")) {
+		IMGUI_DEMO_MARKER("Variation: Scale Decay");
 		ImGui::TextWrapped(
 			"A pulsing element that gets smaller with each loop. Scale decreases by "
 			"20%% each iteration using iam_varf_mul(0.8f).");
@@ -3382,6 +3429,7 @@ static void ShowClipSystemDemo()
 
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Variation: Random Jitter")) {
+		IMGUI_DEMO_MARKER("Variation: Random Jitter");
 		ImGui::TextWrapped(
 			"Each loop iteration applies a random offset to the position using "
 			"iam_varf_rand(). The offset varies between -20 and +20 pixels per axis.");
@@ -3431,6 +3479,7 @@ static void ShowClipSystemDemo()
 
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Variation: Color Shift")) {
+		IMGUI_DEMO_MARKER("Variation: Color Shift");
 		ImGui::TextWrapped(
 			"Each loop increments the hue in OKLCH color space using iam_varf_inc(). "
 			"The color smoothly cycles through the spectrum.");
@@ -3487,6 +3536,7 @@ static void ShowClipSystemDemo()
 
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Variation: Accelerating Spin")) {
+		IMGUI_DEMO_MARKER("Variation: Accelerating Spin");
 		ImGui::TextWrapped(
 			"A spinning element that gets 20%% faster each loop using set_timescale_var(). "
 			"Demonstrates timing variation.");
@@ -3540,6 +3590,7 @@ static void ShowClipSystemDemo()
 
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Variation: Staggered Grid (N Instances)")) {
+		IMGUI_DEMO_MARKER("Variation: Staggered Grid (N Instances)");
 		ImGui::TextWrapped(
 			"A grid with staggered timing (top-left to bottom-right). Scale and speed use "
 			"pingpong variation (grow then shrink), rotation increments continuously.");
@@ -3635,6 +3686,7 @@ static void ShowClipSystemDemo()
 
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Variation: Synchronized Race")) {
+		IMGUI_DEMO_MARKER("Variation: Synchronized Race");
 		ImGui::TextWrapped(
 			"5 squares start at different times with different speeds, but all arrive "
 			"at the right edge simultaneously. Uses stagger + per-instance set_time_scale().");
@@ -3745,6 +3797,7 @@ static void ShowClipSystemDemo()
 // ============================================================
 static void ShowColorKeyframeDemo()
 {
+	IMGUI_DEMO_MARKER("ShowColorKeyframeDemo");
 	InitDemoClips();
 
 	ImGui::TextWrapped(
@@ -3802,6 +3855,7 @@ static void ShowColorKeyframeDemo()
 // ============================================================
 static void ShowResizeHelpersDemo()
 {
+	IMGUI_DEMO_MARKER("ShowResizeHelpersDemo");
 	float dt = GetSafeDeltaTime();
 
 	ImGui::TextWrapped(
@@ -3812,6 +3866,7 @@ static void ShowResizeHelpersDemo()
 
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Relative Positioning")) {
+		IMGUI_DEMO_MARKER("Relative Positioning");
 		ImGui::TextWrapped("Position as percentage of container + pixel offset:");
 
 		static ImVec2 percent(0.5f, 0.5f);
@@ -3850,6 +3905,7 @@ static void ShowResizeHelpersDemo()
 
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Anchor Spaces Showcase")) {
+		IMGUI_DEMO_MARKER("Anchor Spaces Showcase");
 		ImGui::TextWrapped("Each anchor space measures from a different reference:");
 
 		ImGui::Spacing();
@@ -3977,6 +4033,7 @@ static void ShowResizeHelpersDemo()
 
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Resolver Callback")) {
+		IMGUI_DEMO_MARKER("Resolver Callback");
 		ImGui::TextWrapped(
 			"iam_tween_vec2_resolved() uses a callback to compute the target position dynamically. "
 			"Useful when the target depends on runtime state.");
@@ -4043,6 +4100,7 @@ static void ShowResizeHelpersDemo()
 
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Rebase Animation")) {
+		IMGUI_DEMO_MARKER("Rebase Animation");
 		ImGui::TextWrapped(
 			"iam_rebase_vec2() allows changing the target of an in-progress animation "
 			"without snapping or restarting. Useful for drag operations.");
@@ -4109,6 +4167,7 @@ static void ShowResizeHelpersDemo()
 
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Anchor Size Query")) {
+		IMGUI_DEMO_MARKER("Anchor Size Query");
 		ImGui::TextWrapped(
 			"anchor_size() returns the dimensions of each anchor space. "
 			"Useful for manual calculations.");
@@ -4170,6 +4229,7 @@ static void InitLayerClips()
 
 static void ShowLayeringDemo()
 {
+	IMGUI_DEMO_MARKER("ShowLayeringDemo");
 	float dt = GetSafeDeltaTime();
 	(void)dt;
 	InitLayerClips();
@@ -4182,6 +4242,7 @@ static void ShowLayeringDemo()
 
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Basic Layer Blending (3 Layers)")) {
+		IMGUI_DEMO_MARKER("Basic Layer Blending (3 Layers)");
 		ImGui::TextWrapped(
 			"Three animations move dots with different patterns. "
 			"Adjust the weight sliders to blend between them.");
@@ -4282,6 +4343,7 @@ static void ShowLayeringDemo()
 
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Instance Weights")) {
+		IMGUI_DEMO_MARKER("Instance Weights");
 		ImGui::TextWrapped(
 			"set_weight() on an instance controls its contribution when used with the layering API.");
 
@@ -4394,6 +4456,7 @@ static void InitDrawListClips()
 
 static void ShowDrawListDemo()
 {
+	IMGUI_DEMO_MARKER("ShowDrawListDemo");
 	float dt = GetSafeDeltaTime();
 	InitDrawListClips();
 
@@ -4502,6 +4565,7 @@ static void ShowDrawListDemo()
 	// Pulsing Rings using staggered clips
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Pulsing Rings")) {
+		IMGUI_DEMO_MARKER("Pulsing Rings");
 		ImGui::TextDisabled("4 rings animated with staggered clip instances");
 
 		static const int NUM_RINGS = 4;
@@ -4565,6 +4629,7 @@ static void ShowDrawListDemo()
 	// Pendulum Wave - mesmerizing physics visualization
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Pendulum Wave")) {
+		IMGUI_DEMO_MARKER("Pendulum Wave");
 		ImGui::TextDisabled("15 pendulums with slightly different frequencies using iam_oscillate");
 
 		ImVec2 canvas_pos = ImGui::GetCursorScreenPos();
@@ -4621,6 +4686,7 @@ static void ShowDrawListDemo()
 	// Lissajous Curve - beautiful mathematical pattern from two oscillators
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Lissajous Curve")) {
+		IMGUI_DEMO_MARKER("Lissajous Curve");
 		ImGui::TextDisabled("Two oscillators at different frequencies create evolving patterns");
 
 		ImVec2 canvas_pos = ImGui::GetCursorScreenPos();
@@ -4685,6 +4751,7 @@ static void ShowDrawListDemo()
 	// Breathing Heartbeat - pulsing heart with ECG line
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Breathing Heartbeat")) {
+		IMGUI_DEMO_MARKER("Breathing Heartbeat");
 		ImGui::TextDisabled("Heart pulse animation using iam_oscillate with custom timing");
 
 		ImVec2 canvas_pos = ImGui::GetCursorScreenPos();
@@ -4806,6 +4873,7 @@ static void ShowDrawListDemo()
 // ============================================================
 static void ShowOscillatorsDemo()
 {
+	IMGUI_DEMO_MARKER("ShowOscillatorsDemo");
 	float dt = GetSafeDeltaTime();
 
 	ImGui::TextWrapped("Oscillators provide continuous periodic animations without managing state. "
@@ -4862,6 +4930,7 @@ static void ShowOscillatorsDemo()
 	// Vec2 oscillation demo
 	ApplyOpenAll();
 	if (ImGui::TreeNode("2D Oscillation (Lissajous)")) {
+		IMGUI_DEMO_MARKER("2D Oscillation (Lissajous)");
 		static ImVec2 freq_2d(1.0f, 2.0f);
 		static ImVec2 amp_2d(40.0f, 40.0f);
 		ImGui::SliderFloat2("Frequency X/Y", &freq_2d.x, 0.5f, 4.0f, "%.1f");
@@ -4884,6 +4953,7 @@ static void ShowOscillatorsDemo()
 	// Practical UI example
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Practical: Pulsing Button")) {
+		IMGUI_DEMO_MARKER("Practical: Pulsing Button");
 		float pulse = iam_oscillate(ImGui::GetID("pulse_btn"), 0.1f, 2.0f, iam_wave_sine, 0.0f, dt);
 		float scale = 1.0f + pulse;
 
@@ -4911,6 +4981,7 @@ static void ShowOscillatorsDemo()
 // ============================================================
 static void ShowShakeWiggleDemo()
 {
+	IMGUI_DEMO_MARKER("ShowShakeWiggleDemo");
 	float dt = GetSafeDeltaTime();
 
 	ImGui::TextWrapped("Shake provides decaying random motion (for error feedback, impacts). "
@@ -4954,6 +5025,7 @@ static void ShowShakeWiggleDemo()
 	// Wiggle demo
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Wiggle (Continuous)")) {
+		IMGUI_DEMO_MARKER("Wiggle (Continuous)");
 		static float wiggle_amplitude = 5.0f;
 		static float wiggle_frequency = 3.0f;
 
@@ -4981,6 +5053,7 @@ static void ShowShakeWiggleDemo()
 	// Practical example
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Practical: Error Feedback")) {
+		IMGUI_DEMO_MARKER("Practical: Error Feedback");
 		static char input_buf[64] = "";
 		static bool show_error = false;
 		ImGuiID error_shake_id = ImGui::GetID("error_shake");
@@ -5022,6 +5095,7 @@ static void ShowShakeWiggleDemo()
 // ============================================================
 static void ShowScrollDemo()
 {
+	IMGUI_DEMO_MARKER("ShowScrollDemo");
 	ImGui::TextWrapped("Smooth animated scrolling within ImGui windows. "
 		"Use iam_scroll_to_y() for custom positions or convenience functions for common cases.");
 
@@ -5100,6 +5174,7 @@ static void ShowScrollDemo()
 // ============================================================
 static void ShowMotionPathsDemo()
 {
+	IMGUI_DEMO_MARKER("ShowMotionPathsDemo");
 	ImGui::TextWrapped("Motion paths allow animating positions along bezier curves and Catmull-Rom splines.");
 
 	static bool paths_initialized = false;
@@ -5205,6 +5280,7 @@ static void ShowMotionPathsDemo()
 // ============================================================
 static void ShowPathMorphingDemo()
 {
+	IMGUI_DEMO_MARKER("ShowPathMorphingDemo");
 	float dt = GetSafeDeltaTime();
 
 	ImGui::TextWrapped(
@@ -5268,6 +5344,7 @@ static void ShowPathMorphingDemo()
 	// Demo 1: Manual blend slider
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Manual Morph Control")) {
+		IMGUI_DEMO_MARKER("Manual Morph Control");
 		static float blend = 0.0f;
 		static int path_a_idx = 0;
 		static int path_b_idx = 1;
@@ -5324,6 +5401,7 @@ static void ShowPathMorphingDemo()
 	// Demo 2: Animated morph
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Animated Shape Morph")) {
+		IMGUI_DEMO_MARKER("Animated Shape Morph");
 		static float morph_timer = 0.0f;
 		static bool animating = false;
 		static int from_shape = 0;
@@ -5395,6 +5473,7 @@ static void ShowPathMorphingDemo()
 	// Demo 3: Object along morphing path
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Object Along Morphing Path")) {
+		IMGUI_DEMO_MARKER("Object Along Morphing Path");
 		static float path_t = 0.0f;
 		static float path_blend = 0.0f;
 		static bool animating_path = false;
@@ -5460,6 +5539,7 @@ static void ShowPathMorphingDemo()
 // ============================================================
 static void ShowTextAlongPathDemo()
 {
+	IMGUI_DEMO_MARKER("ShowTextAlongPathDemo");
 	ImGui::TextWrapped("Text can be animated along motion paths with proper character rotation and constant-speed placement.");
 
 	static bool paths_initialized = false;
@@ -5623,6 +5703,7 @@ static void ShowTextAlongPathDemo()
 // ============================================================
 static void ShowTimelineMarkersDemo()
 {
+	IMGUI_DEMO_MARKER("ShowTimelineMarkersDemo");
 	ImGui::TextWrapped("Timeline markers trigger callbacks at specific times during clip playback.");
 
 	static bool clip_initialized = false;
@@ -5696,6 +5777,7 @@ static void ShowTimelineMarkersDemo()
 // ============================================================
 static void ShowAnimationChainingDemo()
 {
+	IMGUI_DEMO_MARKER("ShowAnimationChainingDemo");
 	ImGui::TextWrapped("Animation chaining allows clips to automatically trigger another clip when they complete.");
 
 	static bool clips_initialized = false;
@@ -5809,6 +5891,7 @@ static void ShowAnimationChainingDemo()
 // ============================================================
 static void ShowTextStaggerDemo()
 {
+	IMGUI_DEMO_MARKER("ShowTextStaggerDemo");
 	float dt = GetSafeDeltaTime();
 
 	ImGui::TextWrapped("Text stagger animates text character-by-character with various effects. "
@@ -5880,6 +5963,7 @@ static void ShowTextStaggerDemo()
 	// Multiple effect comparison
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Effect Comparison")) {
+		IMGUI_DEMO_MARKER("Effect Comparison");
 		ImVec2 pos = ImGui::GetCursorScreenPos();
 		ImVec2 size(ImGui::GetContentRegionAvail().x, 300.0f);
 		draw_list->AddRectFilled(pos, ImVec2(pos.x + size.x, pos.y + size.y), IM_COL32(25, 25, 35, 255), 4.0f);
@@ -5910,6 +5994,7 @@ static void ShowTextStaggerDemo()
 // ============================================================
 static void ShowNoiseChannelsDemo()
 {
+	IMGUI_DEMO_MARKER("ShowNoiseChannelsDemo");
 	float dt = GetSafeDeltaTime();
 
 	ImGui::TextWrapped("Noise channels provide organic, natural-looking movement using Perlin, Simplex, "
@@ -6021,6 +6106,7 @@ static void ShowNoiseChannelsDemo()
 	// 2D noise movement
 	ApplyOpenAll();
 	if (ImGui::TreeNode("2D Noise Movement")) {
+		IMGUI_DEMO_MARKER("2D Noise Movement");
 		ImVec2 canvas_pos = ImGui::GetCursorScreenPos();
 		ImVec2 canvas_size(200.0f, 200.0f);
 		ImVec2 center(canvas_pos.x + canvas_size.x * 0.5f, canvas_pos.y + canvas_size.y * 0.5f);
@@ -6045,6 +6131,7 @@ static void ShowNoiseChannelsDemo()
 // ============================================================
 static void ShowStyleInterpolationDemo()
 {
+	IMGUI_DEMO_MARKER("ShowStyleInterpolationDemo");
 	float dt = GetSafeDeltaTime();
 
 	ImGui::TextWrapped("Style interpolation smoothly transitions between different ImGui themes. "
@@ -6316,6 +6403,7 @@ static void ShowStyleInterpolationDemo()
 	// Show current interpolated values
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Interpolated Values")) {
+		IMGUI_DEMO_MARKER("Interpolated Values");
 		ImGui::Text("Rounding: Frame=%.1f, Child=%.1f, Grab=%.1f",
 			blended.FrameRounding, blended.ChildRounding, blended.GrabRounding);
 		ImGui::Text("Padding: Frame=(%.0f,%.0f), Item=(%.0f,%.0f)",
@@ -6332,6 +6420,7 @@ static void ShowStyleInterpolationDemo()
 // ============================================================
 static void ShowDragFeedbackDemo()
 {
+	IMGUI_DEMO_MARKER("ShowDragFeedbackDemo");
 	float dt = GetSafeDeltaTime();
 
 	ImGui::TextWrapped("Drag feedback provides animated visual response during drag operations. "
@@ -6438,6 +6527,7 @@ static void ShowDragFeedbackDemo()
 	// Snap points demo
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Snap Points")) {
+		IMGUI_DEMO_MARKER("Snap Points");
 		static ImVec2 drag_pos2(150, 100);
 		static bool dragging2 = false;
 
@@ -6519,6 +6609,7 @@ static void ShowDragFeedbackDemo()
 // ============================================================
 static void ShowGradientKeyframesDemo()
 {
+	IMGUI_DEMO_MARKER("ShowGradientKeyframesDemo");
 	ImGui::TextWrapped("Gradient keyframes allow you to interpolate between multi-stop color gradients, "
 		"not just single colors. Great for animated backgrounds, health bars, and color themes.");
 
@@ -6527,6 +6618,7 @@ static void ShowGradientKeyframesDemo()
 	// Demo 1: Basic gradient interpolation
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Basic Gradient Interpolation")) {
+		IMGUI_DEMO_MARKER("Basic Gradient Interpolation");
 		static float blend = 0.5f;
 		ImGui::SliderFloat("Blend##GradientBasic", &blend, 0.0f, 1.0f);
 
@@ -6571,6 +6663,7 @@ static void ShowGradientKeyframesDemo()
 	// Demo 2: Animated gradient tween
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Animated Gradient Tween")) {
+		IMGUI_DEMO_MARKER("Animated Gradient Tween");
 		static int target_idx = 0;
 		static const char* gradient_names[] = { "Sunset", "Ocean", "Forest", "Neon" };
 
@@ -6643,6 +6736,7 @@ static void ShowGradientKeyframesDemo()
 	// Demo 3: Health bar with gradient
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Health Bar with Gradient")) {
+		IMGUI_DEMO_MARKER("Health Bar with Gradient");
 		static float health = 0.75f;
 		ImGui::SliderFloat("Health", &health, 0.0f, 1.0f);
 
@@ -6695,6 +6789,7 @@ static void ShowGradientKeyframesDemo()
 // ============================================================
 static void ShowTransformInterpolationDemo()
 {
+	IMGUI_DEMO_MARKER("ShowTransformInterpolationDemo");
 	ImGui::TextWrapped("Transform interpolation allows you to blend 2D transforms (position, rotation, scale) "
 		"with proper shortest-path rotation. Great for UI elements, sprites, and complex animations.");
 
@@ -6703,6 +6798,7 @@ static void ShowTransformInterpolationDemo()
 	// Demo 1: Basic transform interpolation
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Basic Transform Blend")) {
+		IMGUI_DEMO_MARKER("Basic Transform Blend");
 		static float blend = 0.5f;
 		ImGui::SliderFloat("Blend##TransformBasic", &blend, 0.0f, 1.0f);
 
@@ -6750,6 +6846,7 @@ static void ShowTransformInterpolationDemo()
 	// Demo 2: Animated transform tween
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Animated Transform Tween")) {
+		IMGUI_DEMO_MARKER("Animated Transform Tween");
 		static int target_idx = 0;
 		static const char* pose_names[] = { "Center", "Top-Left", "Bottom-Right", "Spinning" };
 
@@ -6836,6 +6933,7 @@ static void ShowTransformInterpolationDemo()
 	// Demo 3: Rotation Modes
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Rotation Modes")) {
+		IMGUI_DEMO_MARKER("Rotation Modes");
 		static int rotation_mode = iam_rotation_shortest;
 		static float target_angle = 0.0f;
 
@@ -6929,6 +7027,7 @@ static void ShowTransformInterpolationDemo()
 	// Demo 3: Transform composition
 	ApplyOpenAll();
 	if (ImGui::TreeNode("Transform Composition")) {
+		IMGUI_DEMO_MARKER("Transform Composition");
 		static float time = 0.0f;
 		time += dt;
 
@@ -7010,6 +7109,7 @@ static void ShowTransformInterpolationDemo()
 // ============================================================
 static void ShowAnimationInspectorDemo()
 {
+	IMGUI_DEMO_MARKER("ShowAnimationInspectorDemo");
 	ImGui::TextWrapped("The Unified Inspector provides a complete debug view of all active animations. "
 		"Use the 'Show Debug Window' checkbox at the top of this demo to open it.");
 
@@ -7031,6 +7131,7 @@ static void ShowAnimationInspectorDemo()
 // ============================================================
 static void ShowStressTestDemo()
 {
+	IMGUI_DEMO_MARKER("ShowStressTestDemo");
 	float dt = GetSafeDeltaTime();
 
 	// Test configuration
@@ -7480,36 +7581,42 @@ void ImAnimDemoWindow(bool create_window)
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Easing Functions")) {
+			IMGUI_DEMO_MARKER("Easing Functions");
 			ShowEasingDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Custom Easing")) {
+			IMGUI_DEMO_MARKER("Custom Easing");
 			ShowCustomEasingDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Basic Tweens")) {
+			IMGUI_DEMO_MARKER("Basic Tweens");
 			ShowBasicTweensDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Color Tweens")) {
+			IMGUI_DEMO_MARKER("Color Tweens");
 			ShowColorTweensDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Per-Axis Easing")) {
+			IMGUI_DEMO_MARKER("Per-Axis Easing");
 			ShowPerAxisEasingDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Tween Policies")) {
+			IMGUI_DEMO_MARKER("Tween Policies");
 			ShowPoliciesDemo();
 			ImGui::TreePop();
 		}
@@ -7536,30 +7643,35 @@ void ImAnimDemoWindow(bool create_window)
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Clip System")) {
+			IMGUI_DEMO_MARKER("Clip System");
 			ShowClipSystemDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Color Keyframes")) {
+			IMGUI_DEMO_MARKER("Color Keyframes");
 			ShowColorKeyframeDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Timeline Markers")) {
+			IMGUI_DEMO_MARKER("Timeline Markers");
 			ShowTimelineMarkersDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Animation Chaining")) {
+			IMGUI_DEMO_MARKER("Animation Chaining");
 			ShowAnimationChainingDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Layering System")) {
+			IMGUI_DEMO_MARKER("Layering System");
 			ShowLayeringDemo();
 			ImGui::TreePop();
 		}
@@ -7576,18 +7688,21 @@ void ImAnimDemoWindow(bool create_window)
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Oscillators")) {
+			IMGUI_DEMO_MARKER("Oscillators");
 			ShowOscillatorsDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Shake & Wiggle")) {
+			IMGUI_DEMO_MARKER("Shake & Wiggle");
 			ShowShakeWiggleDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Noise Channels")) {
+			IMGUI_DEMO_MARKER("Noise Channels");
 			ShowNoiseChannelsDemo();
 			ImGui::TreePop();
 		}
@@ -7604,18 +7719,21 @@ void ImAnimDemoWindow(bool create_window)
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Path Basics")) {
+			IMGUI_DEMO_MARKER("Path Basics");
 			ShowMotionPathsDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Path Morphing")) {
+			IMGUI_DEMO_MARKER("Path Morphing");
 			ShowPathMorphingDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Text Along Paths")) {
+			IMGUI_DEMO_MARKER("Text Along Paths");
 			ShowTextAlongPathDemo();
 			ImGui::TreePop();
 		}
@@ -7632,24 +7750,28 @@ void ImAnimDemoWindow(bool create_window)
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Gradient Keyframes")) {
+			IMGUI_DEMO_MARKER("Gradient Keyframes");
 			ShowGradientKeyframesDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Transform Interpolation")) {
+			IMGUI_DEMO_MARKER("Transform Interpolation");
 			ShowTransformInterpolationDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Style Interpolation")) {
+			IMGUI_DEMO_MARKER("Style Interpolation");
 			ShowStyleInterpolationDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Text Stagger")) {
+			IMGUI_DEMO_MARKER("Text Stagger");
 			ShowTextStaggerDemo();
 			ImGui::TreePop();
 		}
@@ -7666,24 +7788,28 @@ void ImAnimDemoWindow(bool create_window)
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("ImDrawList Animations")) {
+			IMGUI_DEMO_MARKER("ImDrawList Animations");
 			ShowDrawListDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Resize-Aware Helpers")) {
+			IMGUI_DEMO_MARKER("Resize-Aware Helpers");
 			ShowResizeHelpersDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Scroll Animation")) {
+			IMGUI_DEMO_MARKER("Scroll Animation");
 			ShowScrollDemo();
 			ImGui::TreePop();
 		}
 
 		ApplyOpenAll();
 		if (ImGui::TreeNode("Drag Feedback")) {
+			IMGUI_DEMO_MARKER("Drag Feedback");
 			ShowDragFeedbackDemo();
 			ImGui::TreePop();
 		}
