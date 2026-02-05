@@ -9602,14 +9602,17 @@ static void ShowUsecase_XPProgress()
 // ============================================================
 // MAIN USECASE WINDOW
 // ============================================================
-void ImAnimUsecaseWindow()
+void ImAnimUsecaseWindow(bool create_window)
 {
 	ImGui::SetNextWindowSize(ImVec2(700, 800), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("ImAnim Usecases - UI Mockups"))
+	if (create_window)
 	{
-		ImGui::End();
-		return;
+		if (!ImGui::Begin("ImAnim Usecases - UI Mockups"))
+		{
+			ImGui::End();
+			return;
+		}
 	}
 
 	ImGui::TextColored(ImVec4(0.4f, 0.8f, 0.9f, 1.0f), "Real-World UI Animation Patterns");
@@ -9634,6 +9637,8 @@ void ImAnimUsecaseWindow()
 	#define USECASE_ITEM(name, func) \
 		if (current_open_all != 0) ImGui::SetNextItemOpen(current_open_all > 0, ImGuiCond_Always); \
 		if (ImGui::TreeNode(name)) { func(); ImGui::TreePop(); } ImGui::Spacing();
+
+	ImGui::BeginChild(("ImAnim Usecase"));
 
 	// ========================================
 	// BUTTONS & INDICATORS
@@ -9839,5 +9844,8 @@ void ImAnimUsecaseWindow()
 
 	#undef USECASE_ITEM
 
-	ImGui::End();
+	ImGui::EndChild();
+
+	if (create_window)
+		ImGui::End();
 }

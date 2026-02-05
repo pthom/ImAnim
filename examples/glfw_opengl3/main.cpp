@@ -14,10 +14,6 @@
 #endif
 #include <GLFW/glfw3.h>
 
-extern void ImAnimDemoWindow();
-extern void ImAnimDocWindow();
-extern void ImAnimUsecaseWindow();
-
 static void glfw_error_callback(int error, const char* description)
 {
     fprintf(stderr, "GLFW Error %d: %s\n", error, description);

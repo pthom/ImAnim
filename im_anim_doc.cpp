@@ -5870,16 +5870,19 @@ static void DocSection_DebugTools()
 // MAIN DOCUMENTATION WINDOW
 // ============================================================
 
-void ImAnimDocWindow()
+void ImAnimDocWindow(bool create_window)
 {
 	// Update animation systems
 	iam_update_begin_frame();
 	iam_clip_update(GetDocDeltaTime());
 
-	if (!ImGui::Begin("ImAnim Documentation"))
+	if (create_window)
 	{
-		ImGui::End();
-		return;
+		if (!ImGui::Begin("ImAnim Documentation"))
+		{
+			ImGui::End();
+			return;
+		}
 	}
 
 	// Header
@@ -5899,6 +5902,7 @@ void ImAnimDocWindow()
 	}
 
 	ImGui::Separator();
+	ImGui::BeginChild("ImAnim Documentation");
 
 	// Sections
 	DocApplyOpenAll();
@@ -6016,5 +6020,8 @@ void ImAnimDocWindow()
 	// Reset open all flag
 	s_doc_open_all = 0;
 
-	ImGui::End();
+	ImGui::EndChild();
+
+	if (create_window)
+		ImGui::End();
 }

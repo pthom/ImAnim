@@ -1093,3 +1093,10 @@ iam_result iam_clip_load(char const* path, ImGuiID* out_clip_id);
 // 3) Use iam_play(clip_id, instance_id) to start playback; returns iam_instance for queries
 // 4) Call inst.get_float/vec2/vec4/int() to sample animated values
 // 5) Optionally call iam_clip_gc(600) to bound instance memory
+
+// ----------------------------------------------------
+// Demo and doc launchers (see im_anim_demo.cpp, im_anim_docs.cpp, im_anim_usecase.cpp)
+// ----------------------------------------------------
+void ImAnimDemoWindow(bool create_window = true);
+void ImAnimDocWindow(bool create_window = true);
+void ImAnimUsecaseWindow(bool create_window = true);

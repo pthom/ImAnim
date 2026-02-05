@@ -29,10 +29,6 @@ extern "C" {
 #include <stdio.h>
 #include "im_anim.h"
 
-extern void ImAnimDemoWindow();
-extern void ImAnimDocWindow();
-extern void ImAnimUsecaseWindow();
-
 int main()
 {
 	bool bGood;
