@@ -524,13 +524,13 @@ void iam_style_register_current(ImGuiID style_id);                              
 
 // Blend between two registered styles (result applied to ImGui::GetStyle())
 // Uses iam_color_space for color blending mode (iam_col_oklab recommended)
-void iam_style_blend(ImGuiID style_a, ImGuiID style_b, float t, int color_space = iam_col_oklab);
+void iam_style_blend(ImGuiID style_a, ImGuiID style_b, float t, int color_space = iam_color_space::iam_col_oklab);
 
 // Tween between styles over time
 void iam_style_tween(ImGuiID id, ImGuiID target_style, float duration, iam_ease_desc const& ease, int color_space, float dt);
 
 // Get interpolated style without applying
-void iam_style_blend_to(ImGuiID style_a, ImGuiID style_b, float t, ImGuiStyle* out_style, int color_space = iam_col_oklab);
+void iam_style_blend_to(ImGuiID style_a, ImGuiID style_b, float t, ImGuiStyle* out_style, int color_space = iam_color_space::iam_col_oklab);
 
 // Check if a style is registered
 bool iam_style_exists(ImGuiID style_id);
@@ -559,7 +559,7 @@ struct iam_gradient {
 	int stop_count() const { return positions.Size; }
 
 	// Sample the gradient at position t [0,1]
-	ImVec4 sample(float t, int color_space = iam_col_oklab) const;
+	ImVec4 sample(float t, int color_space = iam_color_space::iam_col_oklab) const;
 
 	// Create common gradients
 	static iam_gradient solid(ImVec4 color);
@@ -568,7 +568,7 @@ struct iam_gradient {
 };
 
 // Blend between two gradients
-iam_gradient iam_gradient_lerp(iam_gradient const& a, iam_gradient const& b, float t, int color_space = iam_col_oklab);
+iam_gradient iam_gradient_lerp(iam_gradient const& a, iam_gradient const& b, float t, int color_space = iam_color_space::iam_col_oklab);
 
 // Tween between gradients over time
 iam_gradient iam_tween_gradient(ImGuiID id, ImGuiID channel_id, iam_gradient const& target, float dur, iam_ease_desc const& ez, int policy, int color_space, float dt);
@@ -610,7 +610,7 @@ struct iam_transform {
 };
 
 // Blend between two transforms with rotation interpolation
-iam_transform iam_transform_lerp(iam_transform const& a, iam_transform const& b, float t, int rotation_mode = iam_rotation_shortest);
+iam_transform iam_transform_lerp(iam_transform const& a, iam_transform const& b, float t, int rotation_mode = iam_rotation_mode::iam_rotation_shortest);
 
 // Tween between transforms over time
 iam_transform iam_tween_transform(ImGuiID id, ImGuiID channel_id, iam_transform const& target, float dur, iam_ease_desc const& ez, int policy, int rotation_mode, float dt);
@@ -962,27 +962,27 @@ public:
 	static iam_clip begin(ImGuiID clip_id);
 
 	// Add keyframes for different channel types
-	iam_clip& key_float(ImGuiID channel, float time, float value, int ease_type = iam_ease_linear, float const* bezier4 = nullptr);
-	iam_clip& key_vec2(ImGuiID channel, float time, ImVec2 value, int ease_type = iam_ease_linear, float const* bezier4 = nullptr);
-	iam_clip& key_vec4(ImGuiID channel, float time, ImVec4 value, int ease_type = iam_ease_linear, float const* bezier4 = nullptr);
-	iam_clip& key_int(ImGuiID channel, float time, int value, int ease_type = iam_ease_linear);
-	iam_clip& key_color(ImGuiID channel, float time, ImVec4 value, int color_space = iam_col_oklab, int ease_type = iam_ease_linear, float const* bezier4 = nullptr);
+	iam_clip& key_float(ImGuiID channel, float time, float value, int ease_type = iam_ease_type::iam_ease_linear, float const* bezier4 = nullptr);
+	iam_clip& key_vec2(ImGuiID channel, float time, ImVec2 value, int ease_type = iam_ease_type::iam_ease_linear, float const* bezier4 = nullptr);
+	iam_clip& key_vec4(ImGuiID channel, float time, ImVec4 value, int ease_type = iam_ease_type::iam_ease_linear, float const* bezier4 = nullptr);
+	iam_clip& key_int(ImGuiID channel, float time, int value, int ease_type = iam_ease_type::iam_ease_linear);
+	iam_clip& key_color(ImGuiID channel, float time, ImVec4 value, int color_space = iam_color_space::iam_col_oklab, int ease_type = iam_ease_type::iam_ease_linear, float const* bezier4 = nullptr);
 
 	// Keyframes with repeat variation (value changes per loop iteration)
-	iam_clip& key_float_var(ImGuiID channel, float time, float value, iam_variation_float const& var, int ease_type = iam_ease_linear, float const* bezier4 = nullptr);
-	iam_clip& key_vec2_var(ImGuiID channel, float time, ImVec2 value, iam_variation_vec2 const& var, int ease_type = iam_ease_linear, float const* bezier4 = nullptr);
-	iam_clip& key_vec4_var(ImGuiID channel, float time, ImVec4 value, iam_variation_vec4 const& var, int ease_type = iam_ease_linear, float const* bezier4 = nullptr);
-	iam_clip& key_int_var(ImGuiID channel, float time, int value, iam_variation_int const& var, int ease_type = iam_ease_linear);
-	iam_clip& key_color_var(ImGuiID channel, float time, ImVec4 value, iam_variation_color const& var, int color_space = iam_col_oklab, int ease_type = iam_ease_linear, float const* bezier4 = nullptr);
+	iam_clip& key_float_var(ImGuiID channel, float time, float value, iam_variation_float const& var, int ease_type = iam_ease_type::iam_ease_linear, float const* bezier4 = nullptr);
+	iam_clip& key_vec2_var(ImGuiID channel, float time, ImVec2 value, iam_variation_vec2 const& var, int ease_type = iam_ease_type::iam_ease_linear, float const* bezier4 = nullptr);
+	iam_clip& key_vec4_var(ImGuiID channel, float time, ImVec4 value, iam_variation_vec4 const& var, int ease_type = iam_ease_type::iam_ease_linear, float const* bezier4 = nullptr);
+	iam_clip& key_int_var(ImGuiID channel, float time, int value, iam_variation_int const& var, int ease_type = iam_ease_type::iam_ease_linear);
+	iam_clip& key_color_var(ImGuiID channel, float time, ImVec4 value, iam_variation_color const& var, int color_space = iam_color_space::iam_col_oklab, int ease_type = iam_ease_type::iam_ease_linear, float const* bezier4 = nullptr);
 
 	// Spring-based keyframe (float only)
 	iam_clip& key_float_spring(ImGuiID channel, float time, float target, iam_spring_params const& spring);
 
 	// Anchor-relative keyframes (values resolved relative to window/viewport at get time)
-	iam_clip& key_float_rel(ImGuiID channel, float time, float percent, float px_bias, int anchor_space, int axis, int ease_type = iam_ease_linear, float const* bezier4 = nullptr);
-	iam_clip& key_vec2_rel(ImGuiID channel, float time, ImVec2 percent, ImVec2 px_bias, int anchor_space, int ease_type = iam_ease_linear, float const* bezier4 = nullptr);
-	iam_clip& key_vec4_rel(ImGuiID channel, float time, ImVec4 percent, ImVec4 px_bias, int anchor_space, int ease_type = iam_ease_linear, float const* bezier4 = nullptr);
-	iam_clip& key_color_rel(ImGuiID channel, float time, ImVec4 percent, ImVec4 px_bias, int color_space, int anchor_space, int ease_type = iam_ease_linear, float const* bezier4 = nullptr);
+	iam_clip& key_float_rel(ImGuiID channel, float time, float percent, float px_bias, int anchor_space, int axis, int ease_type = iam_ease_type::iam_ease_linear, float const* bezier4 = nullptr);
+	iam_clip& key_vec2_rel(ImGuiID channel, float time, ImVec2 percent, ImVec2 px_bias, int anchor_space, int ease_type = iam_ease_type::iam_ease_linear, float const* bezier4 = nullptr);
+	iam_clip& key_vec4_rel(ImGuiID channel, float time, ImVec4 percent, ImVec4 px_bias, int anchor_space, int ease_type = iam_ease_type::iam_ease_linear, float const* bezier4 = nullptr);
+	iam_clip& key_color_rel(ImGuiID channel, float time, ImVec4 percent, ImVec4 px_bias, int color_space, int anchor_space, int ease_type = iam_ease_type::iam_ease_linear, float const* bezier4 = nullptr);
 
 	// Timeline grouping - sequential and parallel keyframe blocks
 	iam_clip& seq_begin();  // Start sequential block (keyframes after seq_end start after this block)
@@ -995,7 +995,7 @@ public:
 	iam_clip& marker(float time, iam_marker_callback cb, void* user = nullptr);                     // Add marker (auto-generated ID).
 
 	// Clip options
-	iam_clip& set_loop(bool loop, int direction = iam_dir_normal, int loop_count = -1);
+	iam_clip& set_loop(bool loop, int direction = iam_direction::iam_dir_normal, int loop_count = -1);
 	iam_clip& set_delay(float delay_seconds);
 	iam_clip& set_stagger(int count, float each_delay, float from_center_bias = 0.0f);
 
@@ -1053,7 +1053,7 @@ public:
 	bool get_vec2(ImGuiID channel, ImVec2* out) const;
 	bool get_vec4(ImGuiID channel, ImVec4* out) const;
 	bool get_int(ImGuiID channel, int* out) const;
-	bool get_color(ImGuiID channel, ImVec4* out, int color_space = iam_col_oklab) const;  // Color blended in specified color space.
+	bool get_color(ImGuiID channel, ImVec4* out, int color_space = iam_color_space::iam_col_oklab) const;  // Color blended in specified color space.
 
 	// Check validity
 	bool valid() const;
