@@ -7425,7 +7425,11 @@ void iam_show_debug_timeline(ImGuiID instance_id) {
 						ImGui::Text("Value: (%.3f, %.3f, %.3f, %.3f)", key.value[0], key.value[1], key.value[2], key.value[3]);
 						{
 							ImVec4 col(key.value[0], key.value[1], key.value[2], key.value[3]);
+#ifdef IM_ANIM_PRE_19200_COMPATIBILITY
 							ImGui::ColorButton("##val", col, ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_AlphaPreview, ImVec2(16, 16));
+#else
+							ImGui::ColorButton("##val", col, ImGuiColorEditFlags_NoTooltip, ImVec2(16, 16)); // Alpha preview is default in ImGui 1.92+
+#endif
 						}
 						break;
 					case iam_chan_int:
@@ -7435,7 +7439,11 @@ void iam_show_debug_timeline(ImGuiID instance_id) {
 						ImGui::Text("Color: (%.3f, %.3f, %.3f, %.3f)", key.value[0], key.value[1], key.value[2], key.value[3]);
 						{
 							ImVec4 col(key.value[0], key.value[1], key.value[2], key.value[3]);
+#ifdef IM_ANIM_PRE_19200_COMPATIBILITY
 							ImGui::ColorButton("##val", col, ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_AlphaPreview, ImVec2(16, 16));
+#else
+							ImGui::ColorButton("##val", col, ImGuiColorEditFlags_NoTooltip, ImVec2(16, 16)); // Alpha preview is default in ImGui 1.92+
+#endif
 							char const* space_names[] = { "sRGB", "Linear", "HSV", "OKLAB", "OKLCH" };
 							if (key.color_space >= 0 && key.color_space < 5) {
 								ImGui::SameLine();
