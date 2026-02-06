@@ -83,7 +83,13 @@ struct iam_ease_desc {
 };
 
 // Custom easing function callback (t in [0,1], returns eased value)
+// [ADAPT_IMGUI_BUNDLE] - use ImAnimHybridCallback to switch between function pointer and std::function
+#ifdef IMGUI_BUNDLE_PYTHON_API
+using iam_ease_fn = std::function<float(float)>;
+#else
 typedef float (*iam_ease_fn)(float t);
+#endif
+// [/ADAPT_IMGUI_BUNDLE]
 
 // ----------------------------------------------------
 // Public API declarations
@@ -195,11 +201,19 @@ ImVec4 iam_tween_vec4_rel(ImGuiID id, ImGuiID channel_id, ImVec4 percent, ImVec4
 ImVec4 iam_tween_color_rel(ImGuiID id, ImGuiID channel_id, ImVec4 percent, ImVec4 px_bias, float dur, iam_ease_desc const& ez, int policy, int color_space, int anchor_space, float dt); // Color with component offsets.
 
 // Resolver callbacks for dynamic target computation
+#ifdef IMGUI_BUNDLE_PYTHON_API
+using iam_float_resolver = std::function<float()>;   // Returns float target value.
+using iam_vec2_resolver = std::function<ImVec2()>;  // Returns vec2 target value.
+using iam_vec4_resolver = std::function<ImVec4()>;  // Returns ImVec4 target value.
+using iam_color_resolver = std::function<ImVec4()>; // Returns color target (sRGB).
+using iam_int_resolver = std::function<int()>;      // Returns int target value.
+#else
 typedef float  (*iam_float_resolver)(void* user);   // Returns float target value.
 typedef ImVec2 (*iam_vec2_resolver)(void* user);    // Returns vec2 target value.
 typedef ImVec4 (*iam_vec4_resolver)(void* user);    // Returns vec4 target value.
 typedef ImVec4 (*iam_color_resolver)(void* user);   // Returns color target (sRGB).
 typedef int    (*iam_int_resolver)(void* user);     // Returns int target value.
+#endif
 
 // Resolved tweens - target computed dynamically by callback each frame
 float  iam_tween_float_resolved(ImGuiID id, ImGuiID channel_id, iam_float_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, float dt);                     // Float with dynamic target.
@@ -664,10 +678,17 @@ enum iam_variation_mode {
 };
 
 // Callback types for custom variation logic
+#ifdef IMGUI_BUNDLE_PYTHON_API
+using iam_variation_float_fn = std::function<float(int index)>;
+using iam_variation_int_fn = std::function<int(int index)>;
+using iam_variation_vec2_fn = std::function<ImVec2(int index)>;
+using iam_variation_vec4_fn = std::function<ImVec4(int index)>;
+#else
 typedef float  (*iam_variation_float_fn)(int index, void* user);
 typedef int    (*iam_variation_int_fn)(int index, void* user);
 typedef ImVec2 (*iam_variation_vec2_fn)(int index, void* user);
 typedef ImVec4 (*iam_variation_vec4_fn)(int index, void* user);
+#endif
 
 // Float variation
 struct iam_variation_float {
@@ -918,11 +939,19 @@ static inline iam_variation_color iam_varc_seed(iam_variation_color v, unsigned 
 struct iam_clip_data;
 struct iam_instance_data;
 
+#ifdef IMGUI_BUNDLE_PYTHON_API
+// Callback types (use instance ID instead of pointer for safety)
+using iam_clip_callback = std::function<void(ImGuiID inst_id)>;
+
+// Callback types (use instance ID instead of pointer for safety)
+using iam_marker_callback = std::function<void(ImGuiID inst_id, ImGuiID marker_id, float marker_time)>;
+#else
 // Callback types (use instance ID instead of pointer for safety)
 typedef void (*iam_clip_callback)(ImGuiID inst_id, void* user_data);
 
-// Marker callback (includes marker name/id for identification)
+// Callback types (use instance ID instead of pointer for safety)
 typedef void (*iam_marker_callback)(ImGuiID inst_id, ImGuiID marker_id, float marker_time, void* user_data);
+#endif
 
 // ----------------------------------------------------
 // iam_clip - fluent API for authoring animations

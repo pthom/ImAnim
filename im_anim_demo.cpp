@@ -2392,9 +2392,15 @@ static void InitDemoClips()
 		.key_float(CLIP_CH_SCALE, 0.0f, 0.5f, iam_ease_out_cubic)
 		.key_float(CLIP_CH_SCALE, 0.5f, 1.2f, iam_ease_out_back)
 		.key_float(CLIP_CH_SCALE, 1.0f, 1.0f, iam_ease_in_out_sine)
+#ifdef IMGUI_BUNDLE_PYTHON_API
+		.on_begin([](ImGuiID) { s_callback_begin_count++; })
+		.on_update([](ImGuiID) { s_callback_update_count++; })
+		.on_complete([](ImGuiID) { s_callback_complete_count++; })
+#else
 		.on_begin([](ImGuiID, void*) { s_callback_begin_count++; })
 		.on_update([](ImGuiID, void*) { s_callback_update_count++; })
 		.on_complete([](ImGuiID, void*) { s_callback_complete_count++; })
+#endif
 		.end();
 
 	// Clip 7: Integer keyframes (counter animation)
@@ -4086,6 +4092,14 @@ static void ShowResizeHelpersDemo()
 			rd.radius, IM_COL32(60, 60, 80, 255), 32, 1.0f);
 
 		// Resolver callback
+#ifdef IMGUI_BUNDLE_PYTHON_API
+		auto resolver = []() -> ImVec2 {
+			return ImVec2(
+				rd.center.x + ImCos(rd.angle) * rd.radius,
+				rd.center.y + ImSin(rd.angle) * rd.radius
+			);
+		};
+#else
 		auto resolver = [](void* user) -> ImVec2 {
 			ResolverData* data = (ResolverData*)user;
 			return ImVec2(
@@ -4093,6 +4107,7 @@ static void ShowResizeHelpersDemo()
 				data->center.y + ImSin(data->angle) * data->radius
 			);
 		};
+#endif
 
 		ImGuiID id = ImHashStr("resolver_demo");
 		ImVec2 pos = iam_tween_vec2_resolved(id, 0, resolver, &rd, 0.3f,
@@ -4104,7 +4119,11 @@ static void ShowResizeHelpersDemo()
 			10.0f, IM_COL32(100, 200, 255, 255));
 
 		// Draw the instant target position (without smoothing)
+#ifdef IMGUI_BUNDLE_PYTHON_API
+		ImVec2 instant = resolver();
+#else
 		ImVec2 instant = resolver(&rd);
+#endif
 		draw_list->AddCircle(
 			ImVec2(canvas_pos.x + instant.x, canvas_pos.y + instant.y),
 			12.0f, IM_COL32(255, 100, 100, 150), 12, 2.0f);
@@ -5728,7 +5747,11 @@ static void ShowTimelineMarkersDemo()
 	static float marker_log_time = 0;
 
 	// Marker callback
+#ifdef IMGUI_BUNDLE_PYTHON_API
+	static auto marker_callback = [](ImGuiID inst_id, ImGuiID marker_id, float marker_time) {
+#else
 	static auto marker_callback = [](ImGuiID inst_id, ImGuiID marker_id, float marker_time, void* user_data) {
+#endif
 		char* msg = new char[64];
 		snprintf(msg, 64, "Marker at %.2fs", marker_time);
 		marker_log.push_back(msg);
