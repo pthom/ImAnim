@@ -3190,14 +3190,22 @@ void iam_clip_update(float dt) {
 			// Call on_begin when delay expires
 			if (!inst->begin_called && clip->cb_begin) {
 				inst->begin_called = true;
+#ifdef IMGUI_BUNDLE_PYTHON_API
+				clip->cb_begin(inst->inst_id);
+#else
 				clip->cb_begin(inst->inst_id, clip->cb_begin_user);
+#endif
 			}
 		}
 
 		// Call on_begin on first frame if no delay
 		if (!inst->begin_called && clip->cb_begin) {
 			inst->begin_called = true;
+#ifdef IMGUI_BUNDLE_PYTHON_API
+			clip->cb_begin(inst->inst_id);
+#else
 			clip->cb_begin(inst->inst_id, clip->cb_begin_user);
+#endif
 		}
 
 		float t = inst->time;
@@ -3278,7 +3286,11 @@ void iam_clip_update(float dt) {
 			}
 			inst->last_seen_frame = g_clip_sys.frame_counter;
 			if (clip->cb_complete)
+#ifdef IMGUI_BUNDLE_PYTHON_API
+				clip->cb_complete(inst->inst_id);
+#else
 				clip->cb_complete(inst->inst_id, clip->cb_complete_user);
+#endif
 
 			// Start chained clip if any
 			if (inst->chain_next_clip_id != 0) {
@@ -3325,7 +3337,11 @@ void iam_clip_update(float dt) {
 			if (!inst->markers_triggered[m] && marker.time >= t_min && marker.time <= t_max) {
 				inst->markers_triggered[m] = true;
 				if (marker.callback) {
+#ifdef IMGUI_BUNDLE_PYTHON_API
+					marker.callback(inst->inst_id, marker.marker_id, marker.time);
+#else
 					marker.callback(inst->inst_id, marker.marker_id, marker.time, marker.user_data);
+#endif
 				}
 			}
 		}
@@ -3338,7 +3354,11 @@ void iam_clip_update(float dt) {
 		}
 
 		if (clip->cb_update)
+#ifdef IMGUI_BUNDLE_PYTHON_API
+			clip->cb_update(inst->inst_id);
+#else
 			clip->cb_update(inst->inst_id, clip->cb_update_user);
+#endif
 
 		inst->last_seen_frame = g_clip_sys.frame_counter;
 	}

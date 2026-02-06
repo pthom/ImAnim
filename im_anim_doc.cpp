@@ -1551,6 +1551,17 @@ static void DocSection_ClipSystem()
 			iam_clip::begin(DOC_CLIP_MARKER_DEMO)
 				.key_float(DOC_CH_VALUE, 0.0f, 0.0f, iam_ease_out_cubic)
 				.key_float(DOC_CH_VALUE, 2.0f, 1.0f)
+#ifdef IMGUI_BUNDLE_PYTHON_API
+				.marker(0.5f, [](ImGuiID, ImGuiID, float t) {
+					marker_hit_count += 1;
+				})
+				.marker(1.0f, [](ImGuiID, ImGuiID, float t) {
+					marker_hit_count += 1;
+				})
+				.marker(1.5f, [](ImGuiID, ImGuiID, float t) {
+					marker_hit_count += 1;
+				})
+#else
 				.marker(0.5f, [](ImGuiID, ImGuiID, float t, void* user) {
 					*(int*)user += 1;
 				}, &marker_hit_count)
@@ -1560,6 +1571,7 @@ static void DocSection_ClipSystem()
 				.marker(1.5f, [](ImGuiID, ImGuiID, float t, void* user) {
 					*(int*)user += 1;
 				}, &marker_hit_count)
+#endif
 				.end();
 			marker_clip_init = true;
 		}
@@ -4208,6 +4220,20 @@ static void DocSection_ClipCallbacks()
 			iam_clip::begin(DOC_CLIP_CALLBACK)
 				.key_float(DOC_CH_CB_X, 0.0f, 20.0f, iam_ease_out_cubic)
 				.key_float(DOC_CH_CB_X, 2.0f, 180.0f)
+#ifdef IMGUI_BUNDLE_PYTHON_API
+				.on_begin([](ImGuiID) {
+					cb_state.begin_count++;
+					cb_state.begin_flash = 1.0f;
+				})
+				.on_update([](ImGuiID) {
+					cb_state.update_count++;
+					cb_state.update_flash = 1.0f;
+				})
+				.on_complete([](ImGuiID) {
+					cb_state.complete_count++;
+					cb_state.complete_flash = 1.0f;
+				})
+#else
 				.on_begin([](ImGuiID, void* user) {
 					auto* s = (CallbackState*)user;
 					s->begin_count++;
@@ -4223,6 +4249,7 @@ static void DocSection_ClipCallbacks()
 					s->complete_count++;
 					s->complete_flash = 1.0f;
 				}, &cb_state)
+#endif
 				.end();
 			callback_clip_init = true;
 		}

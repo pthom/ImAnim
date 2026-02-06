@@ -2390,9 +2390,15 @@ static void InitDemoClips()
 		.key_float(CLIP_CH_SCALE, 0.0f, 0.5f, iam_ease_out_cubic)
 		.key_float(CLIP_CH_SCALE, 0.5f, 1.2f, iam_ease_out_back)
 		.key_float(CLIP_CH_SCALE, 1.0f, 1.0f, iam_ease_in_out_sine)
+#ifdef IMGUI_BUNDLE_PYTHON_API
+		.on_begin([](ImGuiID) { s_callback_begin_count++; })
+		.on_update([](ImGuiID) { s_callback_update_count++; })
+		.on_complete([](ImGuiID) { s_callback_complete_count++; })
+#else
 		.on_begin([](ImGuiID, void*) { s_callback_begin_count++; })
 		.on_update([](ImGuiID, void*) { s_callback_update_count++; })
 		.on_complete([](ImGuiID, void*) { s_callback_complete_count++; })
+#endif
 		.end();
 
 	// Clip 7: Integer keyframes (counter animation)
@@ -5726,7 +5732,11 @@ static void ShowTimelineMarkersDemo()
 	static float marker_log_time = 0;
 
 	// Marker callback
+#ifdef IMGUI_BUNDLE_PYTHON_API
+	static auto marker_callback = [](ImGuiID inst_id, ImGuiID marker_id, float marker_time) {
+#else
 	static auto marker_callback = [](ImGuiID inst_id, ImGuiID marker_id, float marker_time, void* user_data) {
+#endif
 		char* msg = new char[64];
 		snprintf(msg, 64, "Marker at %.2fs", marker_time);
 		marker_log.push_back(msg);
