@@ -1220,7 +1220,11 @@ ImVec2 iam_tween_vec2_rel(ImGuiID id, ImGuiID channel_id, ImVec2 percent, ImVec2
 }
 
 ImVec2 iam_tween_vec2_resolved(ImGuiID id, ImGuiID channel_id, iam_vec2_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, float dt) {
+#ifdef IMGUI_BUNDLE_PYTHON_API
+	ImVec2 target = fn ? fn() : ImVec2(0,0);
+#else
 	ImVec2 target = fn ? fn(user) : ImVec2(0,0);
+#endif
 	return iam_tween_vec2(id, channel_id, target, dur, ez, policy, dt);
 }
 
@@ -1259,22 +1263,38 @@ ImVec4 iam_tween_color_rel(ImGuiID id, ImGuiID channel_id, ImVec4 percent, ImVec
 }
 
 float iam_tween_float_resolved(ImGuiID id, ImGuiID channel_id, iam_float_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, float dt) {
+#ifdef IMGUI_BUNDLE_PYTHON_API
+	float target = fn ? fn() : 0.0f;
+#else
 	float target = fn ? fn(user) : 0.0f;
+#endif
 	return iam_tween_float(id, channel_id, target, dur, ez, policy, dt);
 }
 
 ImVec4 iam_tween_vec4_resolved(ImGuiID id, ImGuiID channel_id, iam_vec4_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, float dt) {
+#ifdef IMGUI_BUNDLE_PYTHON_API
+	ImVec4 target = fn ? fn() : ImVec4(0,0,0,0);
+#else
 	ImVec4 target = fn ? fn(user) : ImVec4(0,0,0,0);
+#endif
 	return iam_tween_vec4(id, channel_id, target, dur, ez, policy, dt);
 }
 
 ImVec4 iam_tween_color_resolved(ImGuiID id, ImGuiID channel_id, iam_color_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, int color_space, float dt) {
+#ifdef IMGUI_BUNDLE_PYTHON_API
+	ImVec4 target = fn ? fn() : ImVec4(0,0,0,1);
+#else
 	ImVec4 target = fn ? fn(user) : ImVec4(0,0,0,1);
+#endif
 	return iam_tween_color(id, channel_id, target, dur, ez, policy, color_space, dt);
 }
 
 int iam_tween_int_resolved(ImGuiID id, ImGuiID channel_id, iam_int_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, float dt) {
+#ifdef IMGUI_BUNDLE_PYTHON_API
+	int target = fn ? fn() : 0;
+#else
 	int target = fn ? fn(user) : 0;
+#endif
 	return iam_tween_int(id, channel_id, target, dur, ez, policy, dt);
 }
 
@@ -1634,7 +1654,11 @@ static float compute_var_float(iam_variation_float const& var, int loop_index, u
 	float delta = 0.0f;
 	switch (var.mode) {
 		case iam_var_callback:
+#ifdef IMGUI_BUNDLE_PYTHON_API
+			if (var.callback) return var.callback(loop_index);
+#else
 			if (var.callback) return var.callback(loop_index, var.user);
+#endif
 			return 0.0f;
 		case iam_var_increment:
 			delta = var.amount * (float)loop_index;
@@ -1667,7 +1691,11 @@ static float compute_var_float(iam_variation_float const& var, int loop_index, u
 static float apply_var_float(float base, iam_variation_float const& var, int loop_index, unsigned int* rng_state) {
 	if (var.mode == iam_var_none) return base;
 	if (var.mode == iam_var_callback && var.callback) {
+#ifdef IMGUI_BUNDLE_PYTHON_API
+			return var_clampf(var.callback(loop_index), var.min_clamp, var.max_clamp);
+#else
 		return var_clampf(var.callback(loop_index, var.user), var.min_clamp, var.max_clamp);
+#endif
 	}
 	if (var.mode == iam_var_multiply) {
 		float mult = compute_var_float(var, loop_index, rng_state);
@@ -1681,7 +1709,11 @@ static float apply_var_float(float base, iam_variation_float const& var, int loo
 static int apply_var_int(int base, iam_variation_int const& var, int loop_index, unsigned int* rng_state) {
 	if (var.mode == iam_var_none) return base;
 	if (var.mode == iam_var_callback && var.callback) {
+#ifdef IMGUI_BUNDLE_PYTHON_API
+			return var_clampi(var.callback(loop_index), var.min_clamp, var.max_clamp);
+#else
 		return var_clampi(var.callback(loop_index, var.user), var.min_clamp, var.max_clamp);
+#endif
 	}
 
 	unsigned int rng = var.seed != 0 ? (var.seed + (unsigned int)loop_index * 1664525u) : *rng_state;
@@ -1728,7 +1760,11 @@ static ImVec2 apply_var_vec2(ImVec2 base, iam_variation_vec2 const& var, int loo
 
 	// Callback
 	if (var.mode == iam_var_callback && var.callback) {
+#ifdef IMGUI_BUNDLE_PYTHON_API
+			ImVec2 result = var.callback(loop_index);
+#else
 		ImVec2 result = var.callback(loop_index, var.user);
+#endif
 		return ImVec2(
 			var_clampf(result.x, var.min_clamp.x, var.max_clamp.x),
 			var_clampf(result.y, var.min_clamp.y, var.max_clamp.y)
@@ -1797,7 +1833,11 @@ static ImVec4 apply_var_vec4(ImVec4 base, iam_variation_vec4 const& var, int loo
 
 	// Callback
 	if (var.mode == iam_var_callback && var.callback) {
+#ifdef IMGUI_BUNDLE_PYTHON_API
+			ImVec4 result = var.callback(loop_index);
+#else
 		ImVec4 result = var.callback(loop_index, var.user);
+#endif
 		return ImVec4(
 			var_clampf(result.x, var.min_clamp.x, var.max_clamp.x),
 			var_clampf(result.y, var.min_clamp.y, var.max_clamp.y),
@@ -1888,7 +1928,11 @@ static ImVec4 apply_var_color(ImVec4 base_srgb, iam_variation_color const& var, 
 
 	// Callback (assumed to return sRGB directly)
 	if (var.mode == iam_var_callback && var.callback) {
+#ifdef IMGUI_BUNDLE_PYTHON_API
+			ImVec4 result = var.callback(loop_index);
+#else
 		ImVec4 result = var.callback(loop_index, var.user);
+#endif
 		return ImVec4(
 			var_clampf(result.x, var.min_clamp.x, var.max_clamp.x),
 			var_clampf(result.y, var.min_clamp.y, var.max_clamp.y),
@@ -3190,14 +3234,22 @@ void iam_clip_update(float dt) {
 			// Call on_begin when delay expires
 			if (!inst->begin_called && clip->cb_begin) {
 				inst->begin_called = true;
+#ifdef IMGUI_BUNDLE_PYTHON_API
+				clip->cb_begin(inst->inst_id);
+#else
 				clip->cb_begin(inst->inst_id, clip->cb_begin_user);
+#endif
 			}
 		}
 
 		// Call on_begin on first frame if no delay
 		if (!inst->begin_called && clip->cb_begin) {
 			inst->begin_called = true;
+#ifdef IMGUI_BUNDLE_PYTHON_API
+			clip->cb_begin(inst->inst_id);
+#else
 			clip->cb_begin(inst->inst_id, clip->cb_begin_user);
+#endif
 		}
 
 		float t = inst->time;
@@ -3278,7 +3330,11 @@ void iam_clip_update(float dt) {
 			}
 			inst->last_seen_frame = g_clip_sys.frame_counter;
 			if (clip->cb_complete)
+#ifdef IMGUI_BUNDLE_PYTHON_API
+				clip->cb_complete(inst->inst_id);
+#else
 				clip->cb_complete(inst->inst_id, clip->cb_complete_user);
+#endif
 
 			// Start chained clip if any
 			if (inst->chain_next_clip_id != 0) {
@@ -3325,7 +3381,11 @@ void iam_clip_update(float dt) {
 			if (!inst->markers_triggered[m] && marker.time >= t_min && marker.time <= t_max) {
 				inst->markers_triggered[m] = true;
 				if (marker.callback) {
+#ifdef IMGUI_BUNDLE_PYTHON_API
+					marker.callback(inst->inst_id, marker.marker_id, marker.time);
+#else
 					marker.callback(inst->inst_id, marker.marker_id, marker.time, marker.user_data);
+#endif
 				}
 			}
 		}
@@ -3338,7 +3398,11 @@ void iam_clip_update(float dt) {
 		}
 
 		if (clip->cb_update)
+#ifdef IMGUI_BUNDLE_PYTHON_API
+			clip->cb_update(inst->inst_id);
+#else
 			clip->cb_update(inst->inst_id, clip->cb_update_user);
+#endif
 
 		inst->last_seen_frame = g_clip_sys.frame_counter;
 	}
