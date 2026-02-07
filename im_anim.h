@@ -22,6 +22,11 @@
 #include <limits.h>
 #include <float.h>
 
+#ifdef IMGUI_BUNDLE_PYTHON_API
+#include <functional> // for std::function
+#include <utility>  // for std::pair
+#endif
+
 
 #if defined(IMGUI_VERSION_NUM) && IMGUI_VERSION_NUM < 19200 //ImFontBaked and global ImGuiStoragePair were introduced in v19200.
 #define IM_ANIM_PRE_19200_COMPATIBILITY
@@ -1048,12 +1053,22 @@ public:
 	bool is_playing() const;
 	bool is_paused() const;
 
+#ifdef IMGUI_BUNDLE_PYTHON_UNSUPPORTED_API
 	// Get animated values
 	bool get_float(ImGuiID channel, float* out) const;
 	bool get_vec2(ImGuiID channel, ImVec2* out) const;
 	bool get_vec4(ImGuiID channel, ImVec4* out) const;
 	bool get_int(ImGuiID channel, int* out) const;
 	bool get_color(ImGuiID channel, ImVec4* out, int color_space = iam_color_space::iam_col_oklab) const;  // Color blended in specified color space.
+#endif
+#ifdef IMGUI_BUNDLE_PYTHON_API
+	inline std::pair<bool, float> get_float(ImGuiID channel) const { float v = 0.f; bool ok = get_float(channel, &v); return {ok, v}; }
+	inline std::pair<bool, ImVec2> get_vec2(ImGuiID channel) const { ImVec2 v; bool ok = get_vec2(channel, &v); return {ok, v}; }
+	inline std::pair<bool, ImVec4> get_vec4(ImGuiID channel) const { ImVec4 v; bool ok = get_vec4(channel, &v); return {ok, v}; }
+	inline std::pair<bool, int> get_int(ImGuiID channel) const { int v = 0; bool ok = get_int(channel, &v); return {ok, v}; }
+	inline std::pair<bool, ImVec4> get_color(ImGuiID channel, int color_space = iam_color_space::iam_col_oklab) const { ImVec4 v; bool ok = get_color(channel, &v, color_space); return {ok, v}; }
+#endif
+
 
 	// Check validity
 	bool valid() const;
@@ -1097,10 +1112,19 @@ iam_instance iam_play_stagger(ImGuiID clip_id, ImGuiID instance_id, int index); 
 void iam_layer_begin(ImGuiID instance_id);                                      // Start blending into target instance.
 void iam_layer_add(iam_instance inst, float weight);                            // Add source instance with weight.
 void iam_layer_end(ImGuiID instance_id);                                        // Finalize blending and normalize weights.
+
+#ifdef IMGUI_BUNDLE_PYTHON_UNSUPPORTED_API
 bool iam_get_blended_float(ImGuiID instance_id, ImGuiID channel, float* out);   // Get blended float value.
 bool iam_get_blended_vec2(ImGuiID instance_id, ImGuiID channel, ImVec2* out);   // Get blended vec2 value.
 bool iam_get_blended_vec4(ImGuiID instance_id, ImGuiID channel, ImVec4* out);   // Get blended vec4 value.
 bool iam_get_blended_int(ImGuiID instance_id, ImGuiID channel, int* out);       // Get blended int value.
+#endif
+#ifdef IMGUI_BUNDLE_PYTHON_API
+inline std::pair<bool, float> iam_get_blended_float(ImGuiID instance_id, ImGuiID channel) { float v = 0.f; bool ok = iam_get_blended_float(instance_id, channel, &v); return {ok, v}; }
+inline std::pair<bool, ImVec2> iam_get_blended_vec2(ImGuiID instance_id, ImGuiID channel) { ImVec2 v; bool ok = iam_get_blended_vec2(instance_id, channel, &v); return {ok, v}; }
+inline std::pair<bool, ImVec4> iam_get_blended_vec4(ImGuiID instance_id, ImGuiID channel) { ImVec4 v; bool ok = iam_get_blended_vec4(instance_id, channel, &v); return {ok, v}; }
+inline std::pair<bool, int> iam_get_blended_int(ImGuiID instance_id, ImGuiID channel) { int v = 0; bool ok = iam_get_blended_int(instance_id, channel, &v); return {ok, v}; }
+#endif
 
 // Persistence (optional)
 iam_result iam_clip_save(ImGuiID clip_id, char const* path);
