@@ -1100,3 +1100,4 @@ iam_result iam_clip_load(char const* path, ImGuiID* out_clip_id);
 void ImAnimDemoWindow(bool create_window = true);
 void ImAnimDocWindow(bool create_window = true);
 void ImAnimUsecaseWindow(bool create_window = true);
+void ImAnimDemoBasicsWindow(bool create_window = true);
