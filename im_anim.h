@@ -221,11 +221,22 @@ typedef int    (*iam_int_resolver)(void* user);     // Returns int target value.
 #endif
 
 // Resolved tweens - target computed dynamically by callback each frame
+#ifdef IMGUI_BUNDLE_PYTHON_API
+float  iam_tween_float_resolved(ImGuiID id, ImGuiID channel_id, iam_float_resolver fn, float dur, iam_ease_desc const& ez, int policy, float dt);                     // Float with dynamic target.
+ImVec2 iam_tween_vec2_resolved(ImGuiID id, ImGuiID channel_id, iam_vec2_resolver fn, float dur, iam_ease_desc const& ez, int policy, float dt);                       // Vec2 with dynamic target.
+ImVec4 iam_tween_vec4_resolved(ImGuiID id, ImGuiID channel_id, iam_vec4_resolver fn, float dur, iam_ease_desc const& ez, int policy, float dt);                       // Vec4 with dynamic target.
+ImVec4 iam_tween_color_resolved(ImGuiID id, ImGuiID channel_id, iam_color_resolver fn, float dur, iam_ease_desc const& ez, int policy, int color_space, float dt);    // Color with dynamic target.
+int    iam_tween_int_resolved(ImGuiID id, ImGuiID channel_id, iam_int_resolver fn, float dur, iam_ease_desc const& ez, int policy, float dt);                         // Int with dynamic target.
+#endif
+#ifdef IMGUI_BUNDLE_PYTHON_UNSUPPORTED_API
+#ifndef IMGUI_BUNDLE_PYTHON_API
 float  iam_tween_float_resolved(ImGuiID id, ImGuiID channel_id, iam_float_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, float dt);                     // Float with dynamic target.
 ImVec2 iam_tween_vec2_resolved(ImGuiID id, ImGuiID channel_id, iam_vec2_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, float dt);                       // Vec2 with dynamic target.
 ImVec4 iam_tween_vec4_resolved(ImGuiID id, ImGuiID channel_id, iam_vec4_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, float dt);                       // Vec4 with dynamic target.
 ImVec4 iam_tween_color_resolved(ImGuiID id, ImGuiID channel_id, iam_color_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, int color_space, float dt);    // Color with dynamic target.
 int    iam_tween_int_resolved(ImGuiID id, ImGuiID channel_id, iam_int_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, float dt);                         // Int with dynamic target.
+#endif
+#endif
 
 // Rebase functions - change target of in-progress animation without restarting
 void iam_rebase_float(ImGuiID id, ImGuiID channel_id, float new_target, float dt);  // Smoothly redirect float animation to new target.
