@@ -4110,8 +4110,13 @@ static void ShowResizeHelpersDemo()
 #endif
 
 		ImGuiID id = ImHashStr("resolver_demo");
+#ifdef IMGUI_BUNDLE_PYTHON_API
+		ImVec2 pos = iam_tween_vec2_resolved(id, 0, resolver, 0.3f,
+			iam_ease_preset(iam_ease_out_cubic), iam_policy_crossfade, dt);
+#else
 		ImVec2 pos = iam_tween_vec2_resolved(id, 0, resolver, &rd, 0.3f,
 			iam_ease_preset(iam_ease_out_cubic), iam_policy_crossfade, dt);
+#endif
 
 		// Draw the animated dot (smoothly following the orbit)
 		draw_list->AddCircleFilled(

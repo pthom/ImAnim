@@ -1219,14 +1219,17 @@ ImVec2 iam_tween_vec2_rel(ImGuiID id, ImGuiID channel_id, ImVec2 percent, ImVec2
 	return iam_tween_vec2(id, channel_id, target, dur, ez, policy, dt);
 }
 
-ImVec2 iam_tween_vec2_resolved(ImGuiID id, ImGuiID channel_id, iam_vec2_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, float dt) {
 #ifdef IMGUI_BUNDLE_PYTHON_API
+ImVec2 iam_tween_vec2_resolved(ImGuiID id, ImGuiID channel_id, iam_vec2_resolver fn, float dur, iam_ease_desc const& ez, int policy, float dt) {
 	ImVec2 target = fn ? fn() : ImVec2(0,0);
-#else
-	ImVec2 target = fn ? fn(user) : ImVec2(0,0);
-#endif
 	return iam_tween_vec2(id, channel_id, target, dur, ez, policy, dt);
 }
+#else
+ImVec2 iam_tween_vec2_resolved(ImGuiID id, ImGuiID channel_id, iam_vec2_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, float dt) {
+	ImVec2 target = fn ? fn(user) : ImVec2(0,0);
+	return iam_tween_vec2(id, channel_id, target, dur, ez, policy, dt);
+}
+#endif
 
 void iam_rebase_vec2(ImGuiID id, ImGuiID channel_id, ImVec2 new_target, float dt) {
 	ImGuiID key = iam_detail::make_key(id, channel_id);
@@ -1262,41 +1265,53 @@ ImVec4 iam_tween_color_rel(ImGuiID id, ImGuiID channel_id, ImVec4 percent, ImVec
 	return iam_tween_color(id, channel_id, target, dur, ez, policy, color_space, dt);
 }
 
-float iam_tween_float_resolved(ImGuiID id, ImGuiID channel_id, iam_float_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, float dt) {
 #ifdef IMGUI_BUNDLE_PYTHON_API
+float iam_tween_float_resolved(ImGuiID id, ImGuiID channel_id, iam_float_resolver fn, float dur, iam_ease_desc const& ez, int policy, float dt) {
 	float target = fn ? fn() : 0.0f;
-#else
-	float target = fn ? fn(user) : 0.0f;
-#endif
 	return iam_tween_float(id, channel_id, target, dur, ez, policy, dt);
 }
-
-ImVec4 iam_tween_vec4_resolved(ImGuiID id, ImGuiID channel_id, iam_vec4_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, float dt) {
-#ifdef IMGUI_BUNDLE_PYTHON_API
-	ImVec4 target = fn ? fn() : ImVec4(0,0,0,0);
 #else
-	ImVec4 target = fn ? fn(user) : ImVec4(0,0,0,0);
+float iam_tween_float_resolved(ImGuiID id, ImGuiID channel_id, iam_float_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, float dt) {
+	float target = fn ? fn(user) : 0.0f;
+	return iam_tween_float(id, channel_id, target, dur, ez, policy, dt);
+}
 #endif
+
+#ifdef IMGUI_BUNDLE_PYTHON_API
+ImVec4 iam_tween_vec4_resolved(ImGuiID id, ImGuiID channel_id, iam_vec4_resolver fn, float dur, iam_ease_desc const& ez, int policy, float dt) {
+	ImVec4 target = fn ? fn() : ImVec4(0,0,0,0);
 	return iam_tween_vec4(id, channel_id, target, dur, ez, policy, dt);
 }
-
-ImVec4 iam_tween_color_resolved(ImGuiID id, ImGuiID channel_id, iam_color_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, int color_space, float dt) {
-#ifdef IMGUI_BUNDLE_PYTHON_API
-	ImVec4 target = fn ? fn() : ImVec4(0,0,0,1);
 #else
-	ImVec4 target = fn ? fn(user) : ImVec4(0,0,0,1);
+ImVec4 iam_tween_vec4_resolved(ImGuiID id, ImGuiID channel_id, iam_vec4_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, float dt) {
+	ImVec4 target = fn ? fn(user) : ImVec4(0,0,0,0);
+	return iam_tween_vec4(id, channel_id, target, dur, ez, policy, dt);
+}
 #endif
+
+#ifdef IMGUI_BUNDLE_PYTHON_API
+ImVec4 iam_tween_color_resolved(ImGuiID id, ImGuiID channel_id, iam_color_resolver fn, float dur, iam_ease_desc const& ez, int policy, int color_space, float dt) {
+	ImVec4 target = fn ? fn() : ImVec4(0,0,0,1);
 	return iam_tween_color(id, channel_id, target, dur, ez, policy, color_space, dt);
 }
-
-int iam_tween_int_resolved(ImGuiID id, ImGuiID channel_id, iam_int_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, float dt) {
-#ifdef IMGUI_BUNDLE_PYTHON_API
-	int target = fn ? fn() : 0;
 #else
-	int target = fn ? fn(user) : 0;
+ImVec4 iam_tween_color_resolved(ImGuiID id, ImGuiID channel_id, iam_color_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, int color_space, float dt) {
+	ImVec4 target = fn ? fn(user) : ImVec4(0,0,0,1);
+	return iam_tween_color(id, channel_id, target, dur, ez, policy, color_space, dt);
+}
 #endif
+
+#ifdef IMGUI_BUNDLE_PYTHON_API
+int iam_tween_int_resolved(ImGuiID id, ImGuiID channel_id, iam_int_resolver fn, float dur, iam_ease_desc const& ez, int policy, float dt) {
+	int target = fn ? fn() : 0;
 	return iam_tween_int(id, channel_id, target, dur, ez, policy, dt);
 }
+#else
+int iam_tween_int_resolved(ImGuiID id, ImGuiID channel_id, iam_int_resolver fn, void* user, float dur, iam_ease_desc const& ez, int policy, float dt) {
+	int target = fn ? fn(user) : 0;
+	return iam_tween_int(id, channel_id, target, dur, ez, policy, dt);
+}
+#endif
 
 void iam_rebase_float(ImGuiID id, ImGuiID channel_id, float new_target, float dt) {
 	ImGuiID key = iam_detail::make_key(id, channel_id);
