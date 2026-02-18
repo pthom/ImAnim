@@ -4,6 +4,19 @@ Buildable examples demonstrating ImAnim integration with Dear ImGui.
 
 Each example is a complete application that runs the ImAnim demo (`ImAnimDemoWindow()` from `im_anim_demo.cpp`).
 
+Note: in this fork for imgui_bundle, the submodules were removed: see below for the original submodules configuration.
+```
+[submodule "extern/Sharpmake"]
+path = examples/extern/Sharpmake
+url = https://github.com/ubisoft/Sharpmake.git
+[submodule "extern/imgui"]
+path = examples/extern/imgui
+url = https://github.com/ocornut/imgui.git
+[submodule "extern/ImPlatform"]
+path = examples/extern/ImPlatform
+url = https://github.com/soufianekhiat/ImPlatform.git
+```
+
 ## Available Examples
 
 | Folder | Platform | Graphics | Description |
