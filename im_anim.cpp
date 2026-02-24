@@ -11,6 +11,17 @@
 #include <windows.h>
 #endif
 
+// ImSafeVector: use std::vector for types containing std::function (non-trivially-copyable),
+// since ImVector uses memcpy internally which corrupts std::function state.
+#ifdef IMGUI_BUNDLE_PYTHON_API
+#include <vector>
+template<typename T> using ImSafeVector = std::vector<T>;
+#define IM_SAFE_VSIZE(v) ((int)(v).size())
+#else
+template<typename T> using ImSafeVector = ImVector<T>;
+#define IM_SAFE_VSIZE(v) ((v).Size)
+#endif
+
 #ifdef IM_ANIM_PRE_19200_COMPATIBILITY
 	// ImGuiStoragePair is nested in ImGuiStorage in Pre-1.92.0 versions
 #define IMGUI_STORAGE_PAIR ImGuiStorage::ImGuiStoragePair
@@ -1483,7 +1494,7 @@ struct iam_clip_data {
 	ImVector<iam_clip_detail::iam_track>	iam_tracks;
 
 	// Timeline markers
-	ImVector<iam_clip_detail::iam_marker>	markers;
+	ImSafeVector<iam_clip_detail::iam_marker>	markers;
 
 	// Callbacks
 	iam_clip_callback		cb_begin;
@@ -1591,7 +1602,7 @@ namespace iam_clip_detail {
 
 // Global clip system state
 static struct iam_clip_system {
-	ImVector<iam_clip_data>		clips;
+	ImSafeVector<iam_clip_data>	clips;
 	ImVector<iam_instance_data>	instances;
 	ImGuiStorage				clip_map;		// clip_id -> index+1
 	ImGuiStorage				inst_map;		// inst_id -> index+1
@@ -2323,7 +2334,7 @@ iam_clip iam_clip::begin(ImGuiID clip_id) {
 		g_clip_sys.clips.push_back(iam_clip_data());
 		clip = &g_clip_sys.clips.back();
 		clip->id = clip_id;
-		g_clip_sys.clip_map.SetInt(clip_id, g_clip_sys.clips.Size);
+		g_clip_sys.clip_map.SetInt(clip_id, IM_SAFE_VSIZE(g_clip_sys.clips));
 	} else {
 		clip = &g_clip_sys.clips[idx - 1];
 	}
@@ -2880,9 +2891,9 @@ void iam_clip::end() {
 	clip->build_keys.clear();
 
 	// Sort markers by time
-	if (clip->markers.Size > 1) {
-		for (int i = 0; i < clip->markers.Size - 1; ++i) {
-			for (int j = i + 1; j < clip->markers.Size; ++j) {
+	if (IM_SAFE_VSIZE(clip->markers) > 1) {
+		for (int i = 0; i < IM_SAFE_VSIZE(clip->markers) - 1; ++i) {
+			for (int j = i + 1; j < IM_SAFE_VSIZE(clip->markers); ++j) {
 				if (clip->markers[j].time < clip->markers[i].time) {
 					iam_marker tmp = clip->markers[i];
 					clip->markers[i] = clip->markers[j];
@@ -3380,8 +3391,8 @@ void iam_clip_update(float dt) {
 		inst->time = t;
 
 		// Initialize markers_triggered if needed
-		if (inst->markers_triggered.Size != clip->markers.Size) {
-			inst->markers_triggered.resize(clip->markers.Size);
+		if (inst->markers_triggered.Size != IM_SAFE_VSIZE(clip->markers)) {
+			inst->markers_triggered.resize(IM_SAFE_VSIZE(clip->markers));
 			for (int m = 0; m < inst->markers_triggered.Size; m++) {
 				inst->markers_triggered[m] = false;
 			}
@@ -3391,7 +3402,7 @@ void iam_clip_update(float dt) {
 		// Handle both forward and backward playback
 		float t_min = (prev_t < t) ? prev_t : t;
 		float t_max = (prev_t < t) ? t : prev_t;
-		for (int m = 0; m < clip->markers.Size; m++) {
+		for (int m = 0; m < IM_SAFE_VSIZE(clip->markers); m++) {
 			iam_marker const& marker = clip->markers[m];
 			if (!inst->markers_triggered[m] && marker.time >= t_min && marker.time <= t_max) {
 				inst->markers_triggered[m] = true;
@@ -3473,7 +3484,7 @@ iam_instance iam_play(ImGuiID clip_id, ImGuiID instance_id) {
 
 	// Initialize marker tracking
 	inst->prev_time = (inst->dir_sign > 0) ? 0.0f : clip->duration;
-	inst->markers_triggered.resize(clip->markers.Size);
+	inst->markers_triggered.resize(IM_SAFE_VSIZE(clip->markers));
 	for (int m = 0; m < inst->markers_triggered.Size; m++) {
 		inst->markers_triggered[m] = false;
 	}
@@ -3873,7 +3884,7 @@ iam_result iam_clip_load(char const* path, ImGuiID* out_clip_id) {
 		g_clip_sys.clips.push_back(iam_clip_data());
 		clip = &g_clip_sys.clips.back();
 		clip->id = clip_id;
-		g_clip_sys.clip_map.SetInt(clip_id, g_clip_sys.clips.Size);
+		g_clip_sys.clip_map.SetInt(clip_id, IM_SAFE_VSIZE(g_clip_sys.clips));
 	} else {
 		clip = &g_clip_sys.clips[idx - 1];
 		clip->iam_tracks.clear();
@@ -7014,7 +7025,7 @@ void iam_show_unified_inspector(bool* p_open) {
 
 			// Clip stats
 			if (ImGui::CollapsingHeader("Clip Stats")) {
-				ImGui::Text("Registered Clips: %d", iam_clip_detail::g_clip_sys.clips.Size);
+				ImGui::Text("Registered Clips: %d", IM_SAFE_VSIZE(iam_clip_detail::g_clip_sys.clips));
 				ImGui::Text("Active Instances: %d", iam_clip_detail::g_clip_sys.instances.Size);
 			}
 
